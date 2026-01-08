@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#f8fafc"/>
+  <!-- Strengths Card -->
+  <rect x="50" y="40" width="540" height="320" rx="20" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="70" y="60" width="50" height="50" rx="12" fill="#22c55e"/>
+  <text x="140" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e293b">Your Strengths</text>
+  <text x="140" y="105" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">What you're doing great</text>
+  <!-- Strength Items -->
+  <rect x="70" y="130" width="500" height="45" rx="8" fill="#f0fdf4"/>
+  <circle cx="90" cy="152" r="10" fill="#22c55e"/>
+  <text x="110" y="158" font-family="Arial, sans-serif" font-size="12" fill="#374151">Your overall score of 94/100 demonstrates a strong performance.</text>
+  <rect x="70" y="185" width="500" height="45" rx="8" fill="#f0fdf4"/>
+  <circle cx="90" cy="207" r="10" fill="#22c55e"/>
+  <text x="110" y="213" font-family="Arial, sans-serif" font-size="12" fill="#374151">You maintained excellent fluency, achieving a perfect score of 100/100.</text>
+  <rect x="70" y="240" width="500" height="45" rx="8" fill="#f0fdf4"/>
+  <circle cx="90" cy="262" r="10" fill="#22c55e"/>
+  <text x="110" y="268" font-family="Arial, sans-serif" font-size="12" fill="#374151">Your confidence score is high at 95/100. Great presentation style!</text>
+  <rect x="70" y="295" width="500" height="45" rx="8" fill="#f0fdf4"/>
+  <circle cx="90" cy="317" r="10" fill="#22c55e"/>
+  <text x="110" y="323" font-family="Arial, sans-serif" font-size="12" fill="#374151">The absence of filler words contributed to your excellent fluency.</text>
+  <!-- Growth Areas Card -->
+  <rect x="610" y="40" width="540" height="320" rx="20" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="630" y="60" width="50" height="50" rx="12" fill="#f97316"/>
+  <text x="700" y="85" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e293b">Growth Areas</text>
+  <text x="700" y="105" font-family="Arial, sans-serif" font-size="12" fill="#f97316">Opportunities to improve</text>
+  <!-- Growth Items -->
+  <rect x="630" y="130" width="500" height="60" rx="8" fill="#fff7ed"/>
+  <circle cx="650" cy="160" r="10" fill="#f97316"/>
+  <text x="670" y="153" font-family="Arial, sans-serif" font-size="11" fill="#374151">Your speaking pace of 173 WPM is slightly above the ideal range</text>
+  <text x="670" y="170" font-family="Arial, sans-serif" font-size="11" fill="#374151">of 130-170 WPM.</text>
+  <rect x="630" y="200" width="500" height="60" rx="8" fill="#fff7ed"/>
+  <circle cx="650" cy="230" r="10" fill="#f97316"/>
+  <text x="670" y="223" font-family="Arial, sans-serif" font-size="11" fill="#374151">Your clarity score of 87/100 suggests some words may need</text>
+  <text x="670" y="240" font-family="Arial, sans-serif" font-size="11" fill="#374151">clearer enunciation.</text>
+  <rect x="630" y="270" width="500" height="60" rx="8" fill="#fff7ed"/>
+  <circle cx="650" cy="300" r="10" fill="#f97316"/>
+  <text x="670" y="293" font-family="Arial, sans-serif" font-size="11" fill="#374151">Your tone score of 84/100 indicates room for improvement in</text>
+  <text x="670" y="310" font-family="Arial, sans-serif" font-size="11" fill="#374151">vocal variety and expressiveness.</text>
+  <!-- Action Steps Card -->
+  <rect x="50" y="380" width="1100" height="380" rx="20" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="70" y="400" width="50" height="50" rx="12" fill="#fef3c7"/>
+  <text x="140" y="425" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e293b">💡 Action Steps</text>
+  <text x="140" y="445" font-family="Arial, sans-serif" font-size="12" fill="#eab308">Practical ways to improve</text>
+  <!-- Action Items Row 1 -->
+  <rect x="70" y="470" width="520" height="80" rx="12" fill="#f0f9ff" stroke="#bfdbfe"/>
+  <rect x="90" y="490" width="30" height="30" rx="15" fill="#3b82f6"/>
+  <text x="100" y="512" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">1</text>
+  <text x="140" y="505" font-family="Arial, sans-serif" font-size="12" fill="#374151">Consciously slow down your speaking pace during practice.</text>
+  <text x="140" y="525" font-family="Arial, sans-serif" font-size="12" fill="#374151">Try to stay within the 130-170 WPM range.</text>
+  <rect x="610" y="470" width="520" height="80" rx="12" fill="#f0f9ff" stroke="#bfdbfe"/>
+  <rect x="630" y="490" width="30" height="30" rx="15" fill="#3b82f6"/>
+  <text x="640" y="512" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">2</text>
+  <text x="680" y="505" font-family="Arial, sans-serif" font-size="12" fill="#374151">Incorporate strategic pauses within your speech. Pauses allow</text>
+  <text x="680" y="525" font-family="Arial, sans-serif" font-size="12" fill="#374151">the audience to absorb information.</text>
+  <!-- Action Items Row 2 -->
+  <rect x="70" y="560" width="520" height="80" rx="12" fill="#f0f9ff" stroke="#bfdbfe"/>
+  <rect x="90" y="580" width="30" height="30" rx="15" fill="#3b82f6"/>
+  <text x="100" y="602" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">3</text>
+  <text x="140" y="595" font-family="Arial, sans-serif" font-size="12" fill="#374151">Practice enunciation exercises, focusing on pronouncing</text>
+  <text x="140" y="615" font-family="Arial, sans-serif" font-size="12" fill="#374151">each syllable distinctly.</text>
+  <rect x="610" y="560" width="520" height="80" rx="12" fill="#f0f9ff" stroke="#bfdbfe"/>
+  <rect x="630" y="580" width="30" height="30" rx="15" fill="#3b82f6"/>
+  <text x="640" y="602" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">4</text>
+  <text x="680" y="595" font-family="Arial, sans-serif" font-size="12" fill="#374151">Record yourself speaking and listen back, paying attention</text>
+  <text x="680" y="615" font-family="Arial, sans-serif" font-size="12" fill="#374151">to your vocal tone.</text>
+  <!-- Action Item 5 -->
+  <rect x="70" y="650" width="520" height="80" rx="12" fill="#f0f9ff" stroke="#bfdbfe"/>
+  <rect x="90" y="670" width="30" height="30" rx="15" fill="#3b82f6"/>
+  <text x="100" y="692" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">5</text>
+  <text x="140" y="685" font-family="Arial, sans-serif" font-size="12" fill="#374151">Before your next presentation, practice deep breathing</text>
+  <text x="140" y="705" font-family="Arial, sans-serif" font-size="12" fill="#374151">exercises to help calm your nerves.</text>
+</svg>

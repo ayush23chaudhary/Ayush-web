@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8f0ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg2)"/>
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="white"/>
+  <circle cx="50" cy="35" r="20" fill="#3b82f6"/>
+  <text x="80" y="42" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#1e293b">SpeakWise</text>
+  <!-- Tab Navigation -->
+  <rect x="50" y="80" width="250" height="60" rx="10" fill="#3b82f6"/>
+  <text x="80" y="115" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Performance Studio</text>
+  <rect x="320" y="80" width="220" height="60" rx="10" fill="white" stroke="#e2e8f0"/>
+  <text x="350" y="115" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Analysis Dashboard</text>
+  <rect x="560" y="80" width="200" height="60" rx="10" fill="white" stroke="#e2e8f0"/>
+  <text x="590" y="115" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Progress Tracker</text>
+  <rect x="780" y="80" width="180" height="60" rx="10" fill="white" stroke="#e2e8f0"/>
+  <text x="810" y="115" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Practice Hub</text>
+  <!-- Title -->
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1e293b">Performance Studio</text>
+  <text x="600" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#64748b">Record your speech and get AI-powered analysis</text>
+  <!-- Microphone Circle -->
+  <circle cx="600" cy="450" r="120" fill="white" stroke="#e2e8f0" stroke-width="3"/>
+  <circle cx="600" cy="450" r="100" fill="none" stroke="#d1d5db" stroke-width="2"/>
+  <!-- Microphone Icon -->
+  <rect x="580" y="410" width="40" height="60" rx="20" fill="none" stroke="#9ca3af" stroke-width="4"/>
+  <path d="M560 450 L560 470 Q560 500 600 500 Q640 500 640 470 L640 450" fill="none" stroke="#9ca3af" stroke-width="4"/>
+  <line x1="600" y1="500" x2="600" y2="520" stroke="#9ca3af" stroke-width="4"/>
+  <line x1="580" y1="520" x2="620" y2="520" stroke="#9ca3af" stroke-width="4"/>
+  <!-- Start Recording Button -->
+  <rect x="480" y="620" width="240" height="56" rx="28" fill="#3b82f6"/>
+  <circle cx="520" cy="648" r="12" fill="none" stroke="white" stroke-width="2"/>
+  <text x="550" y="655" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">Start Recording</text>
+</svg>

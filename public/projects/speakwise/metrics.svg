@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#f8fafc"/>
+  <!-- Card Container -->
+  <rect x="50" y="50" width="1100" height="700" rx="20" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <!-- Title -->
+  <text x="600" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#1e293b">Performance Metrics Overview</text>
+  <text x="600" y="140" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Detailed breakdown of your speaking performance</text>
+  <!-- Metric Cards Row 1 -->
+  <!-- Clarity -->
+  <rect x="100" y="180" width="300" height="160" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="120" y="200" width="40" height="40" rx="10" fill="#dbeafe"/>
+  <text x="370" y="210" text-anchor="end" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b">87</text>
+  <text x="370" y="230" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#64748b">/ 100</text>
+  <text x="120" y="230" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Clarity</text>
+  <rect x="120" y="260" width="260" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="120" y="260" width="226" height="8" rx="4" fill="#3b82f6"/>
+  <text x="120" y="300" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">↗ Very Good</text>
+  <text x="120" y="320" font-family="Arial, sans-serif" font-size="11" fill="#64748b">How clearly you articulated your words</text>
+  <!-- Confidence -->
+  <rect x="450" y="180" width="300" height="160" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="470" y="200" width="40" height="40" rx="10" fill="#dbeafe"/>
+  <text x="720" y="210" text-anchor="end" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b">95</text>
+  <text x="720" y="230" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#64748b">/ 100</text>
+  <text x="470" y="230" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Confidence</text>
+  <rect x="470" y="260" width="260" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="470" y="260" width="247" height="8" rx="4" fill="#3b82f6"/>
+  <text x="470" y="300" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">↗ Excellent</text>
+  <text x="470" y="320" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Your speaking confidence and assertiveness</text>
+  <!-- Fluency -->
+  <rect x="800" y="180" width="300" height="160" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="820" y="200" width="40" height="40" rx="10" fill="#dbeafe"/>
+  <text x="1070" y="210" text-anchor="end" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b">100</text>
+  <text x="1070" y="230" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#64748b">/ 100</text>
+  <text x="820" y="230" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Fluency</text>
+  <rect x="820" y="260" width="260" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="820" y="260" width="260" height="8" rx="4" fill="#3b82f6"/>
+  <text x="820" y="300" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">↗ Excellent</text>
+  <text x="820" y="320" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Smoothness and flow of your speech</text>
+  <!-- Metric Cards Row 2 -->
+  <!-- Pace -->
+  <rect x="100" y="370" width="300" height="160" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="120" y="390" width="40" height="40" rx="10" fill="#dbeafe"/>
+  <text x="370" y="400" text-anchor="end" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b">99</text>
+  <text x="370" y="420" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#64748b">/ 100</text>
+  <text x="120" y="420" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Pace</text>
+  <rect x="120" y="450" width="260" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="120" y="450" width="257" height="8" rx="4" fill="#3b82f6"/>
+  <text x="120" y="490" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">↗ Excellent</text>
+  <text x="120" y="510" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Your speaking speed and rhythm</text>
+  <!-- Tone -->
+  <rect x="450" y="370" width="300" height="160" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <rect x="470" y="390" width="40" height="40" rx="10" fill="#dbeafe"/>
+  <text x="720" y="400" text-anchor="end" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#1e293b">84</text>
+  <text x="720" y="420" text-anchor="end" font-family="Arial, sans-serif" font-size="12" fill="#64748b">/ 100</text>
+  <text x="470" y="420" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#1e293b">Tone</text>
+  <rect x="470" y="450" width="260" height="8" rx="4" fill="#e2e8f0"/>
+  <rect x="470" y="450" width="218" height="8" rx="4" fill="#3b82f6"/>
+  <text x="470" y="490" font-family="Arial, sans-serif" font-size="12" fill="#22c55e">↗ Very Good</text>
+  <text x="470" y="510" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Quality and variation in your voice</text>
+  <!-- Overall Score -->
+  <rect x="100" y="560" width="1000" height="120" rx="15" fill="white" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="150" y="620" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1e293b">Overall Average Score</text>
+  <text x="150" y="650" font-family="Arial, sans-serif" font-size="14" fill="#64748b">Combined performance across all metrics</text>
+  <text x="1050" y="630" text-anchor="end" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#3b82f6">93</text>
+  <text x="1050" y="660" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="#64748b">out of 100</text>
+</svg>

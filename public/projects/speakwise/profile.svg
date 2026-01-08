@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#111827"/>
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="#1f2937"/>
+  <text x="50" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">SpeakWise</text>
+  <circle cx="1100" cy="35" r="20" fill="#3b82f6"/>
+  <text x="1100" y="42" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">A</text>
+  <!-- Main Content Area -->
+  <rect x="40" y="100" width="1120" height="660" rx="20" fill="#1f2937"/>
+  <!-- Profile Header -->
+  <circle cx="600" cy="200" r="60" fill="#3b82f6"/>
+  <text x="600" y="215" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">A</text>
+  <text x="600" y="290" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">Ayush Chaudhary</text>
+  <text x="600" y="320" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af" text-anchor="middle">ayush23chaudhary@gmail.com</text>
+  <!-- Stats Row -->
+  <rect x="100" y="360" width="300" height="120" rx="16" fill="#374151"/>
+  <text x="250" y="405" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#f59e0b" text-anchor="middle">🔥 5</text>
+  <text x="250" y="445" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af" text-anchor="middle">Day Streak</text>
+  <text x="250" y="465" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Keep going!</text>
+  <rect x="450" y="360" width="300" height="120" rx="16" fill="#374151"/>
+  <text x="600" y="405" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#3b82f6" text-anchor="middle">12</text>
+  <text x="600" y="445" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af" text-anchor="middle">Total Sessions</text>
+  <text x="600" y="465" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Speech practice sessions</text>
+  <rect x="800" y="360" width="300" height="120" rx="16" fill="#374151"/>
+  <text x="950" y="405" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#22c55e" text-anchor="middle">91</text>
+  <text x="950" y="445" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af" text-anchor="middle">Average Score</text>
+  <text x="950" y="465" font-family="Arial, sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Overall performance</text>
+  <!-- Progress Section -->
+  <text x="100" y="530" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">Your Progress</text>
+  <rect x="100" y="550" width="1000" height="80" rx="12" fill="#374151"/>
+  <text x="130" y="580" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Clarity</text>
+  <rect x="130" y="590" width="200" height="8" rx="4" fill="#4b5563"/>
+  <rect x="130" y="590" width="174" height="8" rx="4" fill="#3b82f6"/>
+  <text x="340" y="600" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">87%</text>
+  <text x="400" y="580" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Confidence</text>
+  <rect x="400" y="590" width="200" height="8" rx="4" fill="#4b5563"/>
+  <rect x="400" y="590" width="190" height="8" rx="4" fill="#22c55e"/>
+  <text x="610" y="600" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">95%</text>
+  <text x="670" y="580" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">Fluency</text>
+  <rect x="670" y="590" width="200" height="8" rx="4" fill="#4b5563"/>
+  <rect x="670" y="590" width="200" height="8" rx="4" fill="#8b5cf6"/>
+  <text x="880" y="600" font-family="Arial, sans-serif" font-size="12" fill="#9ca3af">100%</text>
+  <!-- Recent Sessions -->
+  <text x="100" y="680" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">Recent Sessions</text>
+  <rect x="100" y="700" width="320" height="45" rx="8" fill="#374151"/>
+  <text x="120" y="728" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Mock Interview Practice</text>
+  <text x="380" y="728" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">94</text>
+  <rect x="440" y="700" width="320" height="45" rx="8" fill="#374151"/>
+  <text x="460" y="728" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Conference Presentation</text>
+  <text x="720" y="728" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">89</text>
+  <rect x="780" y="700" width="320" height="45" rx="8" fill="#374151"/>
+  <text x="800" y="728" font-family="Arial, sans-serif" font-size="14" fill="#d1d5db">Elevator Pitch</text>
+  <text x="1060" y="728" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#22c55e">92</text>
+</svg>
