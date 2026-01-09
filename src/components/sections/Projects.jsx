@@ -84,18 +84,23 @@ const EnhancedProjectCard = ({ project, onImageGallery }) => {
 
   return (
     <motion.div
-      className="group relative"
+      className="relative h-full"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      whileHover={{ 
-        y: -8,
-        transition: { duration: 0.3, ease: "easeOut" }
-      }}
     >
-      <Card 
-        variant="default" 
-        className="h-full flex flex-col overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-primary-500/20"
+      <motion.div
+        className="h-full"
+        animate={{ 
+          scale: isHovered ? 1.05 : 1,
+          y: isHovered ? -8 : 0,
+          zIndex: isHovered ? 50 : 1,
+        }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
+        <Card 
+          variant="default" 
+          className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary-500/20"
+        >
         {/* Project Image with Auto-Cycling */}
         <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30">
           <AutoCyclingImage 
@@ -360,6 +365,7 @@ const EnhancedProjectCard = ({ project, onImageGallery }) => {
           </AnimatePresence>
         </motion.div>
       </Card>
+      </motion.div>
     </motion.div>
   );
 };

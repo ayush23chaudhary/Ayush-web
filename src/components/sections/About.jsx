@@ -35,7 +35,7 @@ const About = () => {
         />
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Image Column */}
+          {/* Image Column with Subtle Effects */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -43,15 +43,33 @@ const About = () => {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            <div className="relative aspect-square max-w-md mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500 rounded-2xl transform rotate-3" />
-              <div className="relative bg-white dark:bg-dark-800 rounded-2xl overflow-hidden border border-dark-200 dark:border-dark-700 transform -rotate-0 shadow-xl">
+            <div className="relative w-full max-w-sm mx-auto group">
+              {/* Subtle Background Glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-2xl blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
+              
+              {/* Decorative Corner Accents */}
+              <div className="absolute -top-3 -left-3 w-12 h-12 border-t-2 border-l-2 border-primary-500/40 rounded-tl-xl" />
+              <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b-2 border-r-2 border-accent-500/40 rounded-br-xl" />
+              
+              {/* Main Image Container - Portrait aspect ratio */}
+              <motion.div 
+                className="relative bg-white dark:bg-dark-800 rounded-2xl overflow-hidden border border-dark-200 dark:border-dark-700 shadow-xl aspect-[3/4]"
+                whileHover={{ 
+                  y: -8,
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Profile Image */}
                 <img
                   src={personalInfo.avatar || '/placeholder-avatar.jpg'}
                   alt={personalInfo.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />
-              </div>
+                
+                {/* Subtle Overlay on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </motion.div>
             </div>
           </motion.div>
 
