@@ -19,7 +19,7 @@ export const personalInfo = {
   tagline: "Building intelligent, scalable solutions with modern web technologies and machine learning.",
   
   // Hero section description
-  heroDescription: "CSE undergrad at GLA University, ranked in top 1%. I build AI-powered applications, solve 500+ DSA problems, and hold Azure AI & Oracle Cloud certifications. Passionate about creating impactful software.",
+  heroDescription: "Top 1% CSE student at GLA University. Azure AI Engineer certified. I architect AI-powered solutions, master competitive programming with 500+ solved problems, and transform complex challenges into elegant code. Driven by innovation, powered by passion.",
   
   // Profile image path (place image in public folder)
   profileImage: "/profile.jpg",
@@ -28,11 +28,20 @@ export const personalInfo = {
   // Resume path (place PDF in public folder)
   resumePath: "/Ayush_s_Resume_M.pdf",
   
+  // Primary email
+  email: "ayush23chaudhary@gmail.com",
+  
+  // Phone number
+  phone: "+91 9027224116",
+  
+  // Location
+  location: "Mathura, India",
+  
   // Social links
   social: {
     github: "https://github.com/ayush23chaudhary",
     linkedin: "https://linkedin.com/in/ayush23chaudhary",
-    twitter: "https://twitter.com/ayush23chaudhary",
+    twitter: "https://x.com/im_AyushCh",
     email: "ayush23chaudhary@gmail.com"
   },
   

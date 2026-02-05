@@ -29,8 +29,10 @@ export const education = [
     degree: "Bachelor of Technology in Computer Science Engineering",
     institution: "GLA University",
     location: "Mathura, India",
-    period: "Aug 2023 – May 2027",
+    period: "2023 – 2027",
+    duration: "Aug 2023 – May 2027",
     gpa: "9.29 (Year 1), 9.04 (Year 2)",
+    grade: "CGPA: 9.29",
     achievements: [
       "Ranked among the top 1% of engineering students",
       "Two-time NPTEL National Course Topper",

@@ -19,17 +19,26 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would normally send the form data to a backend
-    console.log('Form submitted:', formData);
+    
+    // Create mailto link with form data
+    const mailtoLink = `mailto:ayush23chaudhary@gmail.com?subject=${encodeURIComponent(formData.subject || 'Contact from Portfolio')}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    )}`;
+    
+    // Open default email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
     setIsSubmitted(true);
+    setFormData({ name: '', email: '', subject: '', message: '' });
     setTimeout(() => {
       setIsSubmitted(false);
-      setFormData({ name: '', email: '', subject: '', message: '' });
     }, 3000);
   };
 
   const contactInfo = [
-    { icon: Mail, label: 'Email', value: personalInfo.social?.email || 'ayush23chaudhary@gmail.com', href: `mailto:${personalInfo.social?.email || 'ayush23chaudhary@gmail.com'}` },
+    { icon: Mail, label: 'Email', value: personalInfo.email || 'ayush23chaudhary@gmail.com', href: `mailto:${personalInfo.email || 'ayush23chaudhary@gmail.com'}` },
+    { icon: Phone, label: 'Phone', value: personalInfo.phone || '+91 9027224116', href: `tel:${personalInfo.phone || '+919027224116'}` },
     { icon: MapPin, label: 'Location', value: personalInfo.location || 'Mathura, India', href: null },
   ];
 
@@ -139,8 +148,8 @@ const Contact = () => {
                   className="flex flex-col items-center justify-center py-12 text-center"
                 >
                   <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
-                  <h4 className="text-xl font-bold text-dark-900 dark:text-white mb-2">Message Sent!</h4>
-                  <p className="text-dark-600 dark:text-dark-400">Thank you for reaching out. I'll get back to you soon!</p>
+                  <h4 className="text-xl font-bold text-dark-900 dark:text-white mb-2">Opening Email Client!</h4>
+                  <p className="text-dark-600 dark:text-dark-400">Your default email app should open with the message pre-filled.</p>
                 </motion.div>
               ) : (
                 <>

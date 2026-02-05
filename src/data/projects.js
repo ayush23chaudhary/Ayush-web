@@ -35,6 +35,31 @@ export const projects = [
   },
   {
     id: 2,
+    title: "BrajPath – Mathura Heritage & Tourism Platform",
+    slug: "brajpath",
+    featured: true,
+    problem: "Tourists visiting Mathura and Vrindavan struggle to find comprehensive information about temples, cultural sites, and local experiences in one place.",
+    description: "A full-stack web platform showcasing the rich cultural heritage of Mathura-Vrindavan, featuring temples, tourist attractions, local festivals, and travel guides to help visitors explore the sacred land of Lord Krishna.",
+    features: [
+      "Interactive temple and tourist spot directory",
+      "Detailed information about historical significance",
+      "Festival calendar and cultural events",
+      "Travel guides and local recommendations",
+      "Responsive design for mobile tourists",
+      "Image galleries of heritage sites"
+    ],
+    impact: "Created a comprehensive digital guide for cultural tourism in Mathura-Vrindavan region.",
+    technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
+    liveUrl: "https://brajpath.vercel.app",
+    githubUrl: "https://github.com/ayush23chaudhary/brajpath",
+    image: "/projects/brajpath/hero.svg",
+    images: [
+      "/projects/brajpath/hero.svg"
+    ],
+    category: "Full-Stack"
+  },
+  {
+    id: 3,
     title: "ML-Powered Internship Recommendation System",
     slug: "internship-recommender",
     featured: true,
@@ -54,7 +79,7 @@ export const projects = [
     category: "AI/ML"
   },
   {
-    id: 3,
+    id: 4,
     title: "Personal Portfolio Website",
     slug: "portfolio",
     featured: true,
@@ -74,7 +99,7 @@ export const projects = [
     category: "Full-Stack"
   },
   {
-    id: 4,
+    id: 5,
     title: "DSA Problem Tracker",
     slug: "dsa-tracker",
     featured: false,
