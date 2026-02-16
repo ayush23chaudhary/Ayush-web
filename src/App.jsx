@@ -8,6 +8,7 @@ import {
   Resume, 
   Contact 
 } from './components/sections';
+import { ScrollProgress } from './components/effects';
 
 /**
  * Main App Component
@@ -16,6 +17,9 @@ import {
 function App() {
   return (
     <div className="min-h-screen bg-white dark:bg-dark-950 transition-colors duration-300 relative overflow-x-hidden">
+      {/* Scroll Progress Indicator */}
+      <ScrollProgress />
+      
       {/* Navigation */}
       <Navbar />
       

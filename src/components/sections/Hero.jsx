@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react';
 import { Button } from '../ui';
+import { TypingEffect, FloatingElement } from '../effects';
 import { personalInfo } from '../../data';
 
 /**
@@ -28,12 +29,19 @@ const Hero = () => {
   return (
     <section 
       id="hero" 
-      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-dark-900 dark:via-dark-900 dark:to-dark-800"
+      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-dark-900 dark:via-dark-900 dark:to-dark-800 overflow-hidden"
     >
-      {/* Background decoration */}
+      {/* Animated Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
+        <FloatingElement duration={4} yOffset={20}>
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl" />
+        </FloatingElement>
+        <FloatingElement duration={5} yOffset={15}>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
+        </FloatingElement>
+        <FloatingElement duration={6} yOffset={25}>
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary-400/5 rounded-full blur-3xl" />
+        </FloatingElement>
       </div>
 
       <div className="section-container relative z-10">
@@ -51,7 +59,7 @@ const Hero = () => {
             Hello, I'm
           </motion.p>
 
-          {/* Name */}
+          {/* Name - Darker color */}
           <motion.h1 
             variants={itemVariants}
             className="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark-900 dark:text-white mb-6"
@@ -59,19 +67,18 @@ const Hero = () => {
             {personalInfo.name}
           </motion.h1>
 
-          {/* Roles */}
+          {/* Roles with Typing Effect */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-3 mb-6"
+            className="text-2xl sm:text-3xl font-semibold mb-6 h-12 flex items-center justify-center"
           >
-            {personalInfo.roles.map((role, index) => (
-              <span 
-                key={index}
-                className="px-4 py-2 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium"
-              >
-                {role}
-              </span>
-            ))}
+            <TypingEffect 
+              texts={personalInfo.roles}
+              className="text-dark-700 dark:text-dark-200"
+              speed={100}
+              deleteSpeed={50}
+              pauseDuration={2000}
+            />
           </motion.div>
 
           {/* Description */}

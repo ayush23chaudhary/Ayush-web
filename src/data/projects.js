@@ -50,7 +50,7 @@ export const projects = [
     ],
     impact: "Created a comprehensive digital guide for cultural tourism in Mathura-Vrindavan region.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    liveUrl: "https://brajpath.vercel.app",
+    //liveUrl: "https://brajpath.vercel.app",
     githubUrl: "https://github.com/ayush23chaudhary/Braj-Path",
     image: "/projects/brajpath/hero.svg",
     images: [
