@@ -51,7 +51,7 @@ export const projects = [
     impact: "Created a comprehensive digital guide for cultural tourism in Mathura-Vrindavan region.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
     liveUrl: "https://brajpath.vercel.app",
-    githubUrl: "https://github.com/ayush23chaudhary/brajpath",
+    githubUrl: "https://github.com/ayush23chaudhary/Braj-Path",
     image: "/projects/brajpath/hero.svg",
     images: [
       "/projects/brajpath/hero.svg"
@@ -73,50 +73,10 @@ export const projects = [
     ],
     impact: "Improved recommendation relevance and efficiency by approximately 40%.",
     technologies: ["Python", "Flask", "MongoDB", "TF-IDF", "Scikit-learn", "React"],
-    liveUrl: null,
-    githubUrl: "https://github.com/ayush23chaudhary/internship-recommender",
-    image: "/projects/internship-recommender.png",
+    liveUrl: "https://pm-internship-recommendation-engine.vercel.app/",
+    githubUrl: "https://github.com/ayush23chaudhary/PM_Internship_recommendation_engine",
+    image: "/projects/pm-internship/form.svg",
     category: "AI/ML"
-  },
-  {
-    id: 4,
-    title: "Personal Portfolio Website",
-    slug: "portfolio",
-    featured: true,
-    problem: "Developers need a modern, recruiter-friendly way to showcase their skills, projects, and experience online.",
-    description: "A responsive, animated portfolio website built with React, Tailwind CSS, and Framer Motion featuring dark mode, smooth animations, and easy content management.",
-    features: [
-      "Dark/Light mode with system preference detection",
-      "Smooth Framer Motion animations",
-      "Responsive mobile-first design",
-      "Easy content customization via data files"
-    ],
-    impact: "Created a professional online presence for job applications and networking.",
-    technologies: ["React", "Tailwind CSS", "Framer Motion", "Vite", "Vercel"],
-    liveUrl: "https://ayushchaudhary.vercel.app",
-    githubUrl: "https://github.com/ayush23chaudhary/portfolio",
-    image: "/projects/portfolio.png",
-    category: "Full-Stack"
-  },
-  {
-    id: 5,
-    title: "DSA Problem Tracker",
-    slug: "dsa-tracker",
-    featured: false,
-    problem: "Competitive programmers struggle to track their progress across multiple platforms and identify weak areas.",
-    description: "A web application to track DSA problem-solving progress with statistics, topic-wise analysis, and revision reminders.",
-    features: [
-      "Problem tracking by topic and difficulty",
-      "Progress statistics and visualizations",
-      "Revision reminder system",
-      "Multi-platform integration"
-    ],
-    impact: "Helped track 500+ solved problems with better organization.",
-    technologies: ["React", "Node.js", "MongoDB", "Chart.js"],
-    liveUrl: null,
-    githubUrl: "https://github.com/ayush23chaudhary/dsa-tracker",
-    image: "/projects/dsa-tracker.png",
-    category: "Full-Stack"
   }
 ];
 
