@@ -26,7 +26,7 @@ export const personalInfo = {
   avatar: "/profile.jpg", // Used in About section
   
   // Resume path (place PDF in public folder)
-  resumePath: "/Ayush_s_Resume_M.pdf",
+  resumePath: "/AyushChaudhary_Resume.pdf",
   
   // Primary email
   email: "ayush23chaudhary@gmail.com",

@@ -34,6 +34,28 @@ export const projects = [
     category: "AI/ML"
   },
   {
+    id: 1.5,
+    title: "AnonChat – Real-Time Anonymous Messaging Platform",
+    slug: "anonchat",
+    featured: true,
+    problem: "Users often seek a safe, private space to express themselves freely and connect with others instantly without the pressure of revealing their identity or creating accounts.",
+    description: "A real-time anonymous chat application designed for seamless and secure communication. It allows users to pair up instantly and converse without needing any registration or personal data.",
+    features: [
+      "Real-time bi-directional messaging",
+      "Instant anonymous user pairing",
+      "No user registration or data collection required",
+      "Responsive and intuitive user interface",
+      "Secure and low-latency WebSocket connections"
+    ],
+    impact: "Provided a fast, reliable, and privacy-first platform for secure online interactions.",
+    technologies: ["React", "Java Spring Boot", "WebSocket", "Tailwind CSS"],
+    liveUrl: "https://anon-chat-weld.vercel.app",
+    githubUrl: "https://github.com/ayush23chaudhary/Anon-Chat",
+    image: null,
+    images: [],
+    category: "Full-Stack"
+  },
+  {
     id: 2,
     title: "BrajPath – Mathura Heritage & Tourism Platform",
     slug: "brajpath",
