@@ -119,27 +119,6 @@ const Navbar = () => {
                 </button>
               ))}
 
-              {/* Dark mode toggle */}
-              <motion.button
-                onClick={() => setIsDark(prev => !prev)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-lg border border-dark-200 dark:border-dark-800 bg-dark-50 dark:bg-dark-900/60 hover:bg-dark-100 dark:hover:bg-dark-800 text-dark-500 hover:text-primary-500 dark:text-dark-400 dark:hover:text-primary-400 transition-all"
-                aria-label="Toggle dark mode"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={isDark ? 'sun' : 'moon'}
-                    initial={{ rotate: -30, opacity: 0, scale: 0.7 }}
-                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                    exit={{ rotate: 30, opacity: 0, scale: 0.7 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                  </motion.div>
-                </AnimatePresence>
-              </motion.button>
-
               {/* Command Palette Trigger */}
               <button
                 onClick={() => setIsCommandPaletteOpen(true)}

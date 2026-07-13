@@ -84,14 +84,6 @@ const CommandPalette = ({ isOpen, onClose }) => {
       }
     },
     {
-      id: 'theme',
-      title: `Toggle ${isDarkMode ? 'Light' : 'Dark'} Mode`,
-      subtitle: `Switch environment to ${isDarkMode ? 'light' : 'dark'} mode`,
-      icon: isDarkMode ? Sun : Moon,
-      category: 'Action',
-      perform: toggleTheme
-    },
-    {
       id: 'contact',
       title: 'Start a Conversation',
       subtitle: 'Get in touch for internships & collaborations',
