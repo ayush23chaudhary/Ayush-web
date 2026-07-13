@@ -55,24 +55,13 @@ const OpenSource = () => {
   return (
     <section
       id="opensource"
-      className="py-20 lg:py-32 bg-dark-950 relative overflow-hidden"
+      className="py-20 lg:py-32 bg-white dark:bg-dark-950 border-t border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
       aria-label="Open Source Contributions"
     >
-      {/* Terminal-style scanline overlay */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px)',
-      }} />
-      {/* Blueprint grid in dark variant */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundSize: '40px 40px',
-        backgroundImage: `
-          linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px)
-        `,
-      }} />
+      <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
 
       {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary-500/5 dark:bg-primary-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="section-container relative z-10">
         
@@ -82,7 +71,6 @@ const OpenSource = () => {
           title="Open Source"
           subtitle="Contributions to the global developer ecosystem"
           align="center"
-          dark
         />
 
         {/* Quick stats strip */}
@@ -90,17 +78,17 @@ const OpenSource = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-6 mt-10 mb-12 pb-8 border-b border-dark-800"
+          className="flex flex-wrap justify-center gap-6 mt-10 mb-12 pb-8 border-b border-dark-200 dark:border-dark-800"
         >
           {[
-            { value: stats.merged, label: 'MERGED', color: 'text-green-400' },
-            { value: stats.open, label: 'OPEN', color: 'text-primary-400' },
-            { value: stats.closed, label: 'CLOSED', color: 'text-dark-400' },
-            { value: stats.repos, label: 'REPOS', color: 'text-accent-400' },
+            { value: stats.merged, label: 'MERGED', color: 'text-green-600 dark:text-green-400' },
+            { value: stats.open, label: 'OPEN', color: 'text-primary-600 dark:text-primary-400' },
+            { value: stats.closed, label: 'CLOSED', color: 'text-dark-500 dark:text-dark-400' },
+            { value: stats.repos, label: 'REPOS', color: 'text-accent-600 dark:text-accent-400' },
           ].map(({ value, label, color }) => (
             <div key={label} className="text-center">
               <div className={`text-2xl font-bold font-mono ${color}`}>{value}</div>
-              <div className="text-[9px] font-mono text-dark-500 tracking-widest uppercase mt-0.5">{label}</div>
+              <div className="text-[9px] font-mono text-dark-400 dark:text-dark-500 tracking-widest uppercase mt-0.5">{label}</div>
             </div>
           ))}
         </motion.div>
@@ -121,9 +109,9 @@ const OpenSource = () => {
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className={`
                   group relative rounded-xl overflow-hidden
-                  bg-[#111622] border border-slate-800
+                  bg-white dark:bg-[#111622] border border-dark-200 dark:border-slate-800
                   border-l-4 ${cfg.border}
-                  hover:border-slate-700 hover:shadow-2xl hover:shadow-black/60
+                  hover:border-primary-500/40 dark:hover:border-slate-700 hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/60
                   transition-all duration-300
                 `}
               >
@@ -132,8 +120,8 @@ const OpenSource = () => {
                   {/* Top row: repo + status badge */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Github className="w-3.5 h-3.5 text-slate-400" />
-                      <span className="text-xs font-mono font-semibold text-slate-300 group-hover:text-white transition-colors">
+                      <Github className="w-3.5 h-3.5 text-dark-400 dark:text-slate-400" />
+                      <span className="text-xs font-mono font-semibold text-dark-700 dark:text-slate-300 group-hover:text-primary-500 dark:group-hover:text-white transition-colors">
                         {pr.repo}
                       </span>
                     </div>
@@ -145,23 +133,23 @@ const OpenSource = () => {
                   </div>
 
                   {/* PR title (used as bold heading) */}
-                  <h3 className="text-sm font-bold text-slate-100 group-hover:text-white transition-colors mb-2 leading-snug">
+                  <h3 className="text-sm font-bold text-dark-950 dark:text-slate-100 group-hover:text-primary-500 dark:group-hover:text-white transition-colors mb-2 leading-snug">
                     {pr.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-slate-400 leading-relaxed mb-4 font-sans">
+                  <p className="text-xs text-dark-500 dark:text-slate-400 leading-relaxed mb-4 font-sans">
                     {pr.description}
                   </p>
 
                   {/* Footer: tech chips + impact + link */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-dark-100 dark:border-slate-800">
                     {/* Tech chips */}
                     <div className="flex flex-wrap gap-1.5">
                       {pr.technologies?.map((tech) => (
                         <span
                           key={tech}
-                          className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-slate-900 text-slate-400 border border-slate-800"
+                          className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-50 dark:bg-slate-900 text-dark-500 dark:text-slate-400 border border-dark-200 dark:border-slate-800"
                         >
                           {tech}
                         </span>
@@ -180,7 +168,7 @@ const OpenSource = () => {
                         href={pr.prUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-[9px] font-mono text-primary-400 hover:text-primary-300 transition-colors"
+                        className="flex items-center gap-1 text-[9px] font-mono text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 transition-colors"
                       >
                         VIEW PR
                         <ExternalLink className="w-2.5 h-2.5" />
@@ -207,7 +195,7 @@ const OpenSource = () => {
             size="lg"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs tracking-wider border-dark-600 text-dark-300 hover:border-primary-500 hover:text-primary-400"
+            className="font-mono text-xs tracking-wider border-dark-200 dark:border-dark-800 text-dark-600 dark:text-dark-300 hover:border-primary-500 hover:text-primary-400"
           >
             <Github className="w-4 h-4 mr-2" />
             EXPLORE GITHUB PROFILE
