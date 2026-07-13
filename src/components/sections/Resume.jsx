@@ -20,7 +20,7 @@ const Resume = () => {
   return (
     <section 
       id="resume" 
-      className="py-20 lg:py-32 bg-dark-50/50 dark:bg-dark-900/50"
+      className="py-20 lg:py-32 bg-dark-50/50 dark:bg-dark-950"
       aria-label="Resume section"
     >
       <div className="section-container">

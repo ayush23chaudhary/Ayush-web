@@ -45,7 +45,7 @@ const ArchFlow = ({ slug }) => {
   if (!steps) return null;
 
   return (
-    <div className="mt-5 p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-200/60 dark:border-dark-800/60">
+    <div className="mt-5 p-4 rounded-xl bg-dark-50 dark:bg-dark-900/60 border border-dark-200/60 dark:border-dark-800/60">
       <div className="text-[8px] font-mono text-dark-400 tracking-widest uppercase mb-3 flex items-center gap-1.5">
         <span className="w-1 h-1 rounded-full bg-primary-500 animate-pulse" />
         DATA FLOW
@@ -58,7 +58,7 @@ const ArchFlow = ({ slug }) => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 text-[9px] font-mono text-dark-700 dark:text-dark-300 font-semibold whitespace-nowrap"
+              className="px-2.5 py-1.5 rounded-lg bg-white dark:bg-[#151922] border border-dark-200 dark:border-dark-800 text-[9px] font-mono text-dark-700 dark:text-dark-300 font-semibold whitespace-nowrap"
             >
               {step}
             </motion.div>
@@ -82,7 +82,7 @@ const ImpactBar = ({ impact }) => {
   const pct = match ? parseInt(match[1]) : 60;
 
   return (
-    <div className="mt-4 p-3.5 rounded-xl bg-primary-50/60 dark:bg-primary-950/10 border border-primary-100 dark:border-primary-900/30">
+    <div className="mt-4 p-3.5 rounded-xl bg-primary-50/60 dark:bg-primary-950/20 border border-primary-100 dark:border-primary-900/30">
       <div className="flex items-center justify-between mb-2">
         <span className="text-[9px] font-mono text-primary-500 font-bold uppercase tracking-wider">SYSTEM_IMPACT</span>
         <span className="text-[9px] font-mono text-primary-500">{pct}%</span>
@@ -106,10 +106,10 @@ const ImpactBar = ({ impact }) => {
 ------------------------------------------------------------------ */
 const StepLabel = ({ n, label }) => (
   <div className="flex items-center gap-2 mb-2">
-    <div className="flex items-center justify-center w-5 h-5 rounded-full bg-dark-200 dark:bg-dark-700 text-[9px] font-mono font-bold text-dark-500 dark:text-dark-400 flex-shrink-0">
+    <div className="flex items-center justify-center w-5 h-5 rounded-full bg-dark-100 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-[9px] font-mono font-bold text-dark-500 dark:text-dark-400 flex-shrink-0">
       {String(n).padStart(2, '0')}
     </div>
-    <span className="text-[9px] font-mono text-dark-400 uppercase tracking-widest">{label}</span>
+    <span className="text-[9px] font-mono text-dark-400 dark:text-dark-500 uppercase tracking-widest">{label}</span>
   </div>
 );
 

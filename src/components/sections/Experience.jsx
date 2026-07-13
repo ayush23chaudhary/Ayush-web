@@ -34,7 +34,7 @@ const Experience = () => {
   return (
     <section
       id="experience"
-      className="py-20 lg:py-32 bg-dark-50 dark:bg-dark-900 border-b border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
+      className="py-20 lg:py-32 bg-dark-50/50 dark:bg-dark-950 border-b border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
 
@@ -50,7 +50,7 @@ const Experience = () => {
 
           {/* ── Left: Unified timeline ── */}
           <div className="lg:col-span-8">
-            <div className="text-[9px] font-mono text-dark-400 tracking-widest uppercase mb-6 flex items-center gap-2">
+            <div className="text-[9px] font-mono text-dark-400 dark:text-dark-500 tracking-widest uppercase mb-6 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
               SYS.TIMELINE / CAREER_LOG
             </div>
@@ -81,7 +81,7 @@ const Experience = () => {
                       </div>
 
                       {/* Card */}
-                      <div className="flex-1 bg-white dark:bg-dark-900 rounded-2xl border border-dark-200 dark:border-dark-800 p-5 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-250 group">
+                      <div className="flex-1 bg-white dark:bg-[#111622] rounded-2xl border border-dark-200 dark:border-slate-800 p-5 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-250 group">
                         {/* Type badge + date */}
                         <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                           <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border ${labelColor} ${isWork ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-200 dark:border-primary-800/40' : 'bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800/40'}`}>
@@ -94,7 +94,7 @@ const Experience = () => {
                         </div>
 
                         {/* Title */}
-                        <h4 className="text-sm font-bold text-dark-900 dark:text-white mb-0.5">
+                        <h4 className="text-sm font-bold text-dark-900 dark:text-slate-100 mb-0.5">
                           {isWork ? item.title : item.degree}
                         </h4>
 
@@ -124,7 +124,7 @@ const Experience = () => {
                         {item.achievements && (
                           <ul className="space-y-1.5">
                             {item.achievements.map((a, i) => (
-                              <li key={i} className="flex items-start gap-2 text-xs text-dark-500 dark:text-dark-400">
+                              <li key={i} className="flex items-start gap-2 text-xs text-dark-500 dark:text-slate-400">
                                 <ChevronRight className={`w-3 h-3 mt-0.5 flex-shrink-0 ${labelColor} opacity-60`} />
                                 <span>{a}</span>
                               </li>
@@ -134,9 +134,9 @@ const Experience = () => {
 
                         {/* Tech chips */}
                         {item.technologies && item.technologies.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-dark-100 dark:border-dark-800">
+                          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-dark-100 dark:border-slate-800">
                             {item.technologies.map(t => (
-                              <span key={t} className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-50 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-dark-400">
+                              <span key={t} className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-50 dark:bg-slate-900 border border-dark-200 dark:border-slate-800 text-dark-500 dark:text-slate-400">
                                 {t}
                               </span>
                             ))}
@@ -166,14 +166,14 @@ const Experience = () => {
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 hover:border-green-400/40 transition-all"
+                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-slate-800 bg-white dark:bg-[#111622] hover:border-green-400/40 transition-all"
                   >
                     <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200/50 dark:border-green-800/50 flex-shrink-0">
                       <Award className="w-3.5 h-3.5 text-green-500" />
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">{cert.name}</h5>
-                      <p className="text-[9px] font-mono text-dark-400 mt-0.5 uppercase tracking-wider">
+                      <h5 className="text-xs font-bold text-dark-900 dark:text-slate-255 leading-tight">{cert.name}</h5>
+                      <p className="text-[9px] font-mono text-dark-400 dark:text-dark-500 mt-0.5 uppercase tracking-wider">
                         {cert.issuer} · {cert.date}
                       </p>
                     </div>
@@ -195,17 +195,17 @@ const Experience = () => {
                     initial={{ opacity: 0, x: 20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 hover:border-amber-400/40 transition-all"
+                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-slate-800 bg-white dark:bg-[#111622] hover:border-amber-400/40 transition-all"
                   >
                     <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/50 flex-shrink-0">
                       <Terminal className="w-3.5 h-3.5 text-amber-500" />
                     </div>
                     <div>
-                      <h5 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">{hack.name}</h5>
+                      <h5 className="text-xs font-bold text-dark-900 dark:text-slate-255 leading-tight">{hack.name}</h5>
                       <p className="text-[9px] font-mono text-amber-500 mt-0.5 uppercase tracking-wider font-bold">
                         {hack.position}
                       </p>
-                      <p className="text-[9px] font-mono text-dark-400 mt-0.5">{hack.date}</p>
+                      <p className="text-[9px] font-mono text-dark-400 dark:text-dark-500 mt-0.5">{hack.date}</p>
                     </div>
                   </motion.div>
                 ))}
