@@ -23,13 +23,9 @@ export const projects = [
     technologies: ["React", "Node.js", "Express", "MongoDB", "Gemini AI", "Speech-to-Text"],
     liveUrl: "https://www.speakwise.co.in/",
     githubUrl: "https://github.com/ayush23chaudhary/SpeakWise-Speech-AI-Coach",
-    image: "/projects/speakwise/hero.svg",
+    image: "/projects/projects-png/Speakwise.png",
     images: [
-      "/projects/speakwise/hero.svg",
-      "/projects/speakwise/studio.svg",
-      "/projects/speakwise/metrics.svg",
-      "/projects/speakwise/feedback.svg",
-      "/projects/speakwise/profile.svg"
+      "/projects/projects-png/Speakwise.png"
     ],
     category: "AI/ML"
   },
@@ -51,8 +47,10 @@ export const projects = [
     technologies: ["React", "Java Spring Boot", "WebSocket", "Tailwind CSS"],
     liveUrl: "https://anon-chat-weld.vercel.app",
     githubUrl: "https://github.com/ayush23chaudhary/Anon-Chat",
-    image: null,
-    images: [],
+    image: "/projects/projects-png/Anonchat.png",
+    images: [
+      "/projects/projects-png/Anonchat.png"
+    ],
     category: "Full-Stack"
   },
   {
@@ -74,8 +72,10 @@ export const projects = [
     technologies: ["HTML", "CSS", "JavaScript", "Mermaid.js", "Vite"],
     liveUrl: "https://diagram-note-three.vercel.app",
     githubUrl: "https://github.com/ayush23chaudhary/DiagramNote",
-    image: null,
-    images: [],
+    image: "/projects/projects-png/DiagramNote.png",
+    images: [
+      "/projects/projects-png/DiagramNote.png"
+    ],
     category: "Front-End"
   },
   {
@@ -97,8 +97,10 @@ export const projects = [
     technologies: ["React", "Node.js", "Express", "Prisma", "PostgreSQL", "Tailwind CSS"],
     liveUrl: "https://transitops-smart-transport-platform.vercel.app/",
     githubUrl: "https://github.com/ayush23chaudhary/Transitops-smart-transport-platform",
-    image: null,
-    images: [],
+    image: "/projects/projects-png/TransitOps.png",
+    images: [
+      "/projects/projects-png/TransitOps.png"
+    ],
     category: "Full-Stack"
   },
   {
@@ -120,9 +122,9 @@ export const projects = [
     technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
     //liveUrl: "https://brajpath.vercel.app",
     githubUrl: "https://github.com/ayush23chaudhary/Braj-Path",
-    image: "/projects/brajpath/hero.svg",
+    image: "/projects/projects-png/Brajpath.png",
     images: [
-      "/projects/brajpath/hero.svg"
+      "/projects/projects-png/Brajpath.png"
     ],
     category: "Full-Stack"
   },
@@ -143,7 +145,10 @@ export const projects = [
     technologies: ["Python", "Flask", "MongoDB", "TF-IDF", "Scikit-learn", "React"],
     liveUrl: "https://pm-internship-recommendation-engine.vercel.app/",
     githubUrl: "https://github.com/ayush23chaudhary/PM_Internship_recommendation_engine",
-    image: "/projects/pm-internship/form.svg",
+    image: "/projects/projects-png/internship-recommendation.png",
+    images: [
+      "/projects/projects-png/internship-recommendation.png"
+    ],
     category: "AI/ML"
   }
 ];
