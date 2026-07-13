@@ -141,13 +141,9 @@ const SystemGraph = () => {
   }, []);
 
   const handleNodeHover = (node, index) => {
-    setIsAutoCycle(false);
+    setIsAutoCycle(false); // Stop automatic cycle completely when user starts interacting
     setActiveNode(node);
     setCycleIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    setIsAutoCycle(true);
   };
 
   return (
@@ -210,7 +206,6 @@ const SystemGraph = () => {
               scale: isActive ? 1.15 : 1,
             }}
             onMouseEnter={() => handleNodeHover(node, index)}
-            onMouseLeave={handleMouseLeave}
             className="cursor-pointer z-10 select-none group"
           >
             <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 shadow-sm transition-all duration-300 ${
