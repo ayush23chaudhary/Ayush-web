@@ -1,501 +1,306 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Sparkles, ChevronRight, Folder, Image } from 'lucide-react';
-import { SectionHeader, Card, Button, Badge, ImageCarousel } from '../ui';
-import { projects, getCategories } from '../../data';
+import { ExternalLink, Github, Sparkles, ChevronRight, Folder, Cpu, Server, Database, Globe } from 'lucide-react';
+import { SectionHeader, Card, Button, Badge } from '../ui';
+import { projects } from '../../data';
 
 /**
- * Auto-cycling Image Component for Project Cards
+ * Visual Architecture Diagram Component for case studies
  */
-const AutoCyclingImage = ({ images, title, className, isCardHovered }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const ArchitectureDiagram = ({ projectId }) => {
+  const stepsMap = {
+    "speakwise": [
+      { name: "Audio Input", type: "input", icon: Cpu },
+      { name: "Speech-to-Text API", type: "process", icon: Server },
+      { name: "Gemini AI Evaluator", type: "process", icon: Server },
+      { name: "Performance Metrics", type: "output", icon: Database }
+    ],
+    "transitops": [
+      { name: "Dispatcher Dispatch", type: "input", icon: Cpu },
+      { name: "Constraint Validator", type: "process", icon: Server },
+      { name: "Resource State Controller", type: "process", icon: Server },
+      { name: "PostgreSQL DB Persistence", type: "output", icon: Database }
+    ],
+    "diagramnote": [
+      { name: "Markdown Input", type: "input", icon: Cpu },
+      { name: "300ms Debounce Filter", type: "process", icon: Server },
+      { name: "Mermaid v11 Renderer", type: "process", icon: Server },
+      { name: "SVG Live Canvas", type: "output", icon: Database }
+    ]
+  };
 
-  useEffect(() => {
-    if (!images || images.length <= 1 || !isCardHovered) {
-      setCurrentIndex(0); // Reset to first image when not hovered
-      return;
-    }
-
-    // Add a small delay before starting to cycle
-    const startDelay = setTimeout(() => {
-      const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % images.length);
-      }, 2500); // Change image every 2.5 seconds on hover (slower pace)
-
-      return () => clearInterval(interval);
-    }, 500); // Wait 500ms before starting the cycle
-
-    return () => clearTimeout(startDelay);
-  }, [images, isCardHovered]);
-
-  if (!images || images.length === 0) {
-    return (
-      <div className={`flex items-center justify-center ${className}`}>
-        <Folder className="w-16 h-16 text-primary-500/50" />
-      </div>
-    );
-  }
+  const steps = stepsMap[projectId];
+  if (!steps) return null;
 
   return (
-    <div className={`relative ${className}`}>
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={currentIndex}
-          src={images[currentIndex]}
-          alt={`${title} - Image ${currentIndex + 1}`}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          onError={(e) => {
-            e.target.style.display = 'none';
-          }}
-        />
-      </AnimatePresence>
-      
-      {/* Image indicators */}
-      {images.length > 1 && isCardHovered && (
-        <motion.div 
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-        >
-          {images.map((_, index) => (
-            <div
-              key={index}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-white w-4' : 'bg-white/50'
-              }`}
-            />
-          ))}
-        </motion.div>
-      )}
+    <div className="mt-6 p-4 rounded-xl bg-dark-50 dark:bg-dark-950 border border-dark-200 dark:border-dark-800/80 font-mono">
+      <div className="text-[9px] text-dark-400 tracking-wider uppercase mb-3 flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+        SYS.FLOW / ARCHITECTURE_DIAGRAM
+      </div>
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px]">
+        {steps.map((step, idx) => {
+          const Icon = step.icon;
+          return (
+            <div key={idx} className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 w-full sm:w-auto justify-center">
+                <Icon className="w-3.5 h-3.5 text-primary-500" />
+                <span className="font-semibold text-dark-800 dark:text-dark-200">{step.name}</span>
+              </div>
+              {idx < steps.length - 1 && (
+                <div className="text-dark-300 dark:text-dark-700 transform rotate-90 sm:rotate-0">
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-/**
- * Enhanced Project Card with Hover Effects
- */
-const EnhancedProjectCard = ({ project, onImageGallery }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      className="relative h-full"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <motion.div
-        className="h-full"
-        animate={{ 
-          scale: isHovered ? 1.05 : 1,
-          y: isHovered ? -8 : 0,
-          zIndex: isHovered ? 50 : 1,
-        }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-        <Card 
-          variant="default" 
-          className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary-500/20"
-        >
-        {/* Project Image with Auto-Cycling */}
-        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30">
-          <AutoCyclingImage 
-            images={project.images || [project.image]}
-            title={project.title}
-            className="w-full h-full"
-            isCardHovered={isHovered}
-          />
-          
-          {/* Featured badge */}
-          {project.featured && (
-            <motion.div 
-              className="absolute top-4 right-4"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: 0.2, type: "spring" }}
-            >
-              <Badge variant="primary" size="sm" icon={Sparkles}>
-                Featured
-              </Badge>
-            </motion.div>
-          )}
-          
-          {/* Category badge */}
-          <motion.div 
-            className="absolute bottom-4 left-4"
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Badge variant="default" size="sm">
-              {project.category}
-            </Badge>
-          </motion.div>
-
-          {/* Images gallery button */}
-          {project.images && project.images.length > 1 && (
-            <motion.button
-              className="absolute bottom-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-medium hover:bg-white/30 transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onImageGallery(project);
-              }}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ delay: 0.4 }}
-            >
-              <Image className="w-3.5 h-3.5" />
-              {project.images.length}
-            </motion.button>
-          )}
-          
-          {/* Overlay with action buttons */}
-          <motion.div 
-            className="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-dark-900/50 to-transparent flex items-end justify-center pb-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex gap-3">
-              {project.liveUrl && (
-                <motion.a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
-                  transition={{ delay: 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="View live demo"
-                >
-                  <ExternalLink className="w-5 h-5" />
-                </motion.a>
-              )}
-              {project.githubUrl && (
-                <motion.a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: isHovered ? 0 : 20, opacity: isHovered ? 1 : 0 }}
-                  transition={{ delay: 0.2 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  aria-label="View source code"
-                >
-                  <Github className="w-5 h-5" />
-                </motion.a>
-              )}
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Content with expansion effect */}
-        <motion.div 
-          className="flex-1 p-6 flex flex-col"
-          animate={{
-            paddingBottom: isHovered ? "2rem" : "1.5rem"
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <motion.h3 
-            className="text-xl font-semibold text-dark-900 dark:text-white mb-2 transition-colors"
-            animate={{
-              color: isHovered ? "rgb(59 130 246)" : undefined
-            }}
-          >
-            {project.title}
-          </motion.h3>
-          
-          <motion.p 
-            className="text-dark-500 dark:text-dark-400 text-sm mb-4"
-            animate={{
-              height: isHovered ? "auto" : "2.5rem"
-            }}
-            transition={{ duration: 0.3 }}
-            style={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitLineClamp: isHovered ? "none" : 2,
-              WebkitBoxOrient: "vertical"
-            }}
-          >
-            {isHovered ? project.description : project.problem}
-          </motion.p>
-
-          {/* Expanded content on hover */}
-          <AnimatePresence>
-            {isHovered && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                {/* Key Features */}
-                {project.features && project.features.length > 0 && (
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-dark-700 dark:text-dark-300 mb-2">
-                      Key Features:
-                    </h4>
-                    <ul className="text-xs text-dark-600 dark:text-dark-400 space-y-1">
-                      {project.features.slice(0, 3).map((feature, idx) => (
-                        <motion.li 
-                          key={idx} 
-                          className="flex items-start gap-2"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * idx }}
-                        >
-                          <span className="text-primary-500 mt-0.5">•</span>
-                          {feature}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Impact */}
-                {project.impact && (
-                  <motion.div 
-                    className="mb-4 p-3 rounded-lg bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <p className="text-primary-600 dark:text-primary-400 text-xs font-medium flex items-start gap-2">
-                      <ChevronRight className="w-3 h-3 flex-shrink-0 mt-0.5" />
-                      {project.impact}
-                    </p>
-                  </motion.div>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Technologies */}
-          {project.technologies && (
-            <motion.div 
-              className="mt-auto pt-4"
-              animate={{
-                marginTop: isHovered ? "1rem" : "auto"
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.div 
-                className="flex flex-wrap gap-1.5"
-                animate={{
-                  gap: isHovered ? "0.5rem" : "0.375rem"
-                }}
-              >
-                {project.technologies.slice(0, isHovered ? project.technologies.length : 4).map((tech, index) => (
-                  <motion.div
-                    key={tech}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.05 * index, type: "spring", stiffness: 200 }}
-                  >
-                    <Badge 
-                      variant="secondary" 
-                      size="xs"
-                      className={`transition-all ${isHovered ? 'hover:scale-110' : ''}`}
-                    >
-                      {tech}
-                    </Badge>
-                  </motion.div>
-                ))}
-                {!isHovered && project.technologies.length > 4 && (
-                  <Badge variant="secondary" size="xs" className="opacity-60">
-                    +{project.technologies.length - 4}
-                  </Badge>
-                )}
-              </motion.div>
-            </motion.div>
-          )}
-
-          {/* Action Buttons */}
-          <AnimatePresence>
-            {isHovered && (project.liveUrl || project.githubUrl) && (
-              <motion.div 
-                className="flex gap-3 pt-4"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-              >
-                {project.liveUrl && (
-                  <Button 
-                    href={project.liveUrl} 
-                    variant="primary" 
-                    size="sm"
-                    className="flex-1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-1" />
-                    Live Demo
-                  </Button>
-                )}
-                {project.githubUrl && (
-                  <Button 
-                    href={project.githubUrl} 
-                    variant="outline" 
-                    size="sm"
-                    className="flex-1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github className="w-4 h-4 mr-1" />
-                    Code
-                  </Button>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      </Card>
-      </motion.div>
-    </motion.div>
-  );
-};
-
-/**
- * Projects Section Component
- * Displays project cards with filtering and image carousel
- */
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
-  const [carouselProject, setCarouselProject] = useState(null);
-  const categories = ['All', ...getCategories()];
+  
+  // Categorize projects
+  const categories = ['All', 'Full-Stack', 'AI/ML', 'Front-End'];
   
   const filteredProjects = activeCategory === 'All' 
     ? projects 
     : projects.filter(p => p.category === activeCategory);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5 }
-    },
-    exit: { 
-      opacity: 0, 
-      y: -20,
-      transition: { duration: 0.3 }
-    }
-  };
-
   return (
     <section 
       id="projects" 
-      className="py-20 lg:py-32 bg-dark-50/50 dark:bg-dark-900/50"
-      aria-label="Projects section"
+      className="py-20 lg:py-32 bg-white dark:bg-dark-950 border-t border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
     >
-      <div className="section-container">
+      <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
+
+      <div className="section-container relative z-10">
         <SectionHeader
-          subtitle="My recent work"
-          title="Featured Projects"
-          description="A selection of projects that showcase my skills and passion for building impactful solutions."
+          badge="Systems"
+          title="Selected Work"
+          subtitle="A catalog of complete, running software systems built with intent"
           align="center"
         />
 
         {/* Category Filter */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-2 mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((category) => (
-            <motion.button
+            <button
               key={category}
               onClick={() => setActiveCategory(category)}
               className={`
-                px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+                px-4 py-1.5 rounded-full text-xs font-semibold font-mono tracking-wider transition-all duration-300
                 ${activeCategory === category
                   ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25'
-                  : 'bg-white dark:bg-dark-800 text-dark-600 dark:text-dark-400 border border-dark-200 dark:border-dark-700 hover:border-primary-300 dark:hover:border-primary-700'
+                  : 'bg-white dark:bg-dark-900 text-dark-600 dark:text-dark-400 border border-dark-200 dark:border-dark-800 hover:border-primary-500/30'
                 }
               `}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
-              {category}
-            </motion.button>
+              {category.toUpperCase()}
+            </button>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Projects Grid */}
-        <motion.div 
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project) => (
-              <EnhancedProjectCard
+        {/* Projects Flow Container */}
+        <div className="space-y-16 lg:space-y-24">
+          {filteredProjects.map((project, idx) => {
+            const isFlagship = ['speakwise', 'transitops', 'diagramnote'].includes(project.slug);
+            const isEven = idx % 2 === 0;
+
+            if (isFlagship) {
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6 }}
+                  className={`grid lg:grid-cols-12 gap-8 items-start`}
+                >
+                  {/* Copy Block */}
+                  <div className={`lg:col-span-7 ${isEven ? 'lg:order-1' : 'lg:order-2'} space-y-6`}>
+                    
+                    {/* Index header */}
+                    <div className="flex items-center gap-3 text-[10px] font-mono text-primary-500 tracking-widest uppercase">
+                      <span>PROJECT_0{idx + 1}</span>
+                      <span>/</span>
+                      <span>STATUS: {project.liveUrl ? 'LIVE' : 'COMPLETED'}</span>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-dark-900 dark:text-white">
+                      {project.title}
+                    </h3>
+
+                    {/* Section 1: The Problem */}
+                    <div>
+                      <h4 className="text-[10px] font-mono text-dark-400 uppercase tracking-widest mb-1.5">
+                        [01_THE_PROBLEM]
+                      </h4>
+                      <p className="text-sm text-dark-600 dark:text-dark-400 leading-relaxed font-sans">
+                        {project.problem}
+                      </p>
+                    </div>
+
+                    {/* Section 2: The System */}
+                    <div>
+                      <h4 className="text-[10px] font-mono text-dark-400 uppercase tracking-widest mb-1.5">
+                        [02_THE_SYSTEM]
+                      </h4>
+                      <p className="text-sm text-dark-600 dark:text-dark-400 leading-relaxed font-sans">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    {/* Technical details flow */}
+                    <ArchitectureDiagram projectId={project.slug} />
+
+                    {/* Section 3: The Build */}
+                    <div className="pt-2">
+                      <h4 className="text-[10px] font-mono text-dark-400 uppercase tracking-widest mb-2.5">
+                        [03_THE_BUILD]
+                      </h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.technologies.map((tech) => (
+                          <Badge key={tech} variant="secondary" size="xs" className="font-mono text-[9px]">
+                            {tech}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Result summary */}
+                    {project.impact && (
+                      <div className="p-3.5 rounded-lg border border-primary-200 dark:border-primary-800 bg-primary-50/50 dark:bg-primary-950/20 text-xs font-mono text-primary-600 dark:text-primary-400">
+                        <span className="font-bold">SYSTEM_IMPACT:</span> {project.impact}
+                      </div>
+                    )}
+
+                    {/* Action buttons */}
+                    <div className="flex gap-4 pt-2">
+                      {project.liveUrl && (
+                        <Button 
+                          href={project.liveUrl} 
+                          variant="primary" 
+                          size="sm"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-xs tracking-wider"
+                        >
+                          <Globe className="w-4 h-4 mr-2" />
+                          LIVE SYSTEM
+                        </Button>
+                      )}
+                      {project.githubUrl && (
+                        <Button 
+                          href={project.githubUrl} 
+                          variant="outline" 
+                          size="sm"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-mono text-xs tracking-wider"
+                        >
+                          <Github className="w-4 h-4 mr-2" />
+                          CODE_SOURCE
+                        </Button>
+                      )}
+                    </div>
+
+                  </div>
+
+                  {/* Right side: visual container (mockup or schema) */}
+                  <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'} h-full flex flex-col justify-center`}>
+                    <div className="relative rounded-2xl border border-dark-200 dark:border-dark-800 bg-dark-50 dark:bg-dark-900 overflow-hidden group">
+                      {project.image ? (
+                        <img 
+                          src={project.image} 
+                          alt={project.title} 
+                          className="w-full h-auto object-cover max-h-[300px] transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center py-20 bg-grid-blueprint">
+                          <Folder className="w-12 h-12 text-primary-500/50 mb-3" />
+                          <span className="text-[10px] font-mono text-dark-400">SYSTEM_IMAGE_NOT_STAGED</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                </motion.div>
+              );
+            }
+
+            // Normal standard compact project card
+            return (
+              <motion.div
                 key={project.id}
-                project={project}
-                onImageGallery={setCarouselProject}
-              />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="max-w-3xl mx-auto"
+              >
+                <Card className="p-6 border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 transition-all duration-300 hover:shadow-xl">
+                  <div className="flex justify-between items-start gap-4 mb-4">
+                    <div>
+                      <div className="text-[9px] font-mono text-dark-400 uppercase tracking-widest mb-1">
+                        PROJECT_0{idx + 1} / {project.category.toUpperCase()}
+                      </div>
+                      <h4 className="text-lg font-bold text-dark-900 dark:text-white">
+                        {project.title}
+                      </h4>
+                    </div>
+                    {project.featured && (
+                      <Badge variant="primary" size="sm" icon={Sparkles}>
+                        Featured
+                      </Badge>
+                    )}
+                  </div>
 
-        {/* View All Projects Button */}
-        {projects.length > 6 && (
-          <motion.div 
-            className="text-center mt-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
-            <Button 
-              href="https://github.com/ayush23chaudhary" 
-              variant="outline" 
-              size="lg"
-              icon={Github}
-            >
-              View All on GitHub
-            </Button>
-          </motion.div>
-        )}
+                  <p className="text-sm text-dark-600 dark:text-dark-400 mb-6 font-sans">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {project.technologies.map((tech) => (
+                      <Badge key={tech} variant="secondary" size="xs" className="font-mono text-[9px]">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-xs font-semibold text-primary-500 hover:text-primary-600 font-mono uppercase"
+                      >
+                        Live System
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-xs font-semibold text-dark-500 hover:text-dark-600 dark:text-dark-400 dark:hover:text-dark-300 font-mono uppercase"
+                      >
+                        Code
+                        <Github className="w-3.5 h-3.5" />
+                      </a>
+                    )}
+                  </div>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </div>
+
       </div>
-
-      {/* Image Carousel Modal */}
-      <AnimatePresence>
-        {carouselProject && carouselProject.images && (
-          <ImageCarousel
-            images={carouselProject.images}
-            title={carouselProject.title}
-            onClose={() => setCarouselProject(null)}
-          />
-        )}
-      </AnimatePresence>
     </section>
   );
 };

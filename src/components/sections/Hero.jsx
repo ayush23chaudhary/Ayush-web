@@ -1,173 +1,159 @@
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Download, Search } from 'lucide-react';
 import { Button } from '../ui';
-import { TypingEffect, FloatingElement } from '../effects';
 import { personalInfo } from '../../data';
+import SystemGraph from './SystemGraph';
 
-/**
- * Hero Section Component
- * Main landing section with introduction and CTAs
- */
 const Hero = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 }
+      transition: { staggerChildren: 0.1, delayChildren: 0.1 }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
   return (
     <section 
       id="hero" 
-      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-white via-primary-50/30 to-accent-50/30 dark:from-dark-900 dark:via-dark-900 dark:to-dark-800 overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative bg-dark-50 dark:bg-dark-950 overflow-hidden pt-20"
     >
-      {/* Animated Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <FloatingElement duration={4} yOffset={20}>
-          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary-500/10 rounded-full blur-3xl" />
-        </FloatingElement>
-        <FloatingElement duration={5} yOffset={15}>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
-        </FloatingElement>
-        <FloatingElement duration={6} yOffset={25}>
-          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary-400/5 rounded-full blur-3xl" />
-        </FloatingElement>
-      </div>
+      {/* Blueprint grid background */}
+      <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
 
-      <div className="section-container relative z-10">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="max-w-4xl mx-auto text-center"
-        >
-          {/* Greeting */}
-          <motion.p 
-            variants={itemVariants}
-            className="text-primary-600 dark:text-primary-400 font-medium mb-4"
-          >
-            Hello, I'm
-          </motion.p>
+      {/* Decorative technical line */}
+      <div className="absolute top-1/4 left-0 right-0 h-[1px] bg-dark-200/30 dark:bg-dark-800/30 pointer-events-none" />
+      <div className="absolute bottom-1/4 left-0 right-0 h-[1px] bg-dark-200/30 dark:bg-dark-800/30 pointer-events-none" />
 
-          {/* Name - Darker color */}
-          <motion.h1 
-            variants={itemVariants}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-dark-900 dark:text-white mb-6"
+      <div className="section-container relative z-10 w-full">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          
+          {/* Left Column: Asymmetric Editorial Copy */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 flex flex-col text-left"
           >
-            {personalInfo.name}
-          </motion.h1>
-
-          {/* Roles with Typing Effect */}
-          <motion.div 
-            variants={itemVariants}
-            className="text-2xl sm:text-3xl font-semibold mb-6 h-12 flex items-center justify-center"
-          >
-            <TypingEffect 
-              texts={personalInfo.roles}
-              className="text-dark-700 dark:text-dark-200"
-              speed={100}
-              deleteSpeed={50}
-              pauseDuration={2000}
-            />
-          </motion.div>
-
-          {/* Description */}
-          <motion.p 
-            variants={itemVariants}
-            className="text-lg sm:text-xl text-dark-600 dark:text-dark-300 max-w-2xl mx-auto mb-8 leading-relaxed"
-          >
-            {personalInfo.heroDescription}
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 mb-12"
-          >
-            <Button 
-              href="#projects" 
-              variant="primary"
-              size="lg"
+            {/* System Status Micro-Label */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex items-center gap-2 mb-6 text-[10px] font-mono tracking-widest text-primary-500 uppercase"
             >
-              View My Work
-            </Button>
-            <Button 
-              href={personalInfo.resumePath}
-              variant="outline"
-              size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download Resume
-            </Button>
-          </motion.div>
+              <span>SYSTEM.RUNNING</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+              <span className="text-dark-400">/ VERSION_2.0</span>
+            </motion.div>
 
-          {/* Social Links */}
-          <motion.div 
-            variants={itemVariants}
-            className="flex justify-center gap-4"
-          >
-            {personalInfo.social?.github && (
-              <a 
-                href={personalInfo.social.github}
+            {/* Title / Name */}
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-dark-900 dark:text-white mb-4 uppercase font-display leading-[1.1]"
+            >
+              {personalInfo.name}
+            </motion.h1>
+
+            <motion.div 
+              variants={itemVariants}
+              className="text-lg sm:text-xl font-mono text-primary-600 dark:text-primary-400 font-semibold mb-6 uppercase tracking-wider"
+            >
+              Software Engineer / System Builder
+            </motion.div>
+
+            {/* Description */}
+            <motion.p 
+              variants={itemVariants}
+              className="text-sm sm:text-base text-dark-600 dark:text-dark-400 max-w-xl mb-8 leading-relaxed font-sans"
+            >
+              {personalInfo.heroDescription}
+            </motion.p>
+
+            {/* Action buttons */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-wrap gap-4 mb-8"
+            >
+              <Button 
+                href="#projects" 
+                variant="primary"
+                size="md"
+                className="font-mono text-xs tracking-wider"
+              >
+                EXPLORE SYSTEMS
+              </Button>
+              <Button 
+                href={personalInfo.resumePath}
+                variant="outline"
+                size="md"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/30 dark:hover:text-primary-400 transition-colors"
-                aria-label="GitHub"
+                className="font-mono text-xs tracking-wider"
               >
-                <Github className="w-6 h-6" />
-              </a>
-            )}
-            {personalInfo.social?.linkedin && (
-              <a 
-                href={personalInfo.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/30 dark:hover:text-primary-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-6 h-6" />
-              </a>
-            )}
-            <a 
-              href={`mailto:${personalInfo.email}`}
-              className="p-3 rounded-full bg-dark-100 dark:bg-dark-800 text-dark-600 dark:text-dark-300 hover:bg-primary-100 hover:text-primary-600 dark:hover:bg-primary-900/30 dark:hover:text-primary-400 transition-colors"
-              aria-label="Email"
+                <Download className="w-4 h-4 mr-2" />
+                RÉSUMÉ
+              </Button>
+            </motion.div>
+
+            {/* Micro annotations / metadata footer */}
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-6 pt-6 border-t border-dark-200 dark:border-dark-800 text-[10px] text-dark-400 font-mono tracking-widest uppercase"
             >
-              <Mail className="w-6 h-6" />
-            </a>
+              <div className="flex items-center gap-1.5">
+                <Github className="w-3.5 h-3.5" />
+                <a href={personalInfo.social.github} target="_blank" rel="noopener noreferrer" className="hover:text-primary-500 transition-colors">GITHUB</a>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Linkedin className="w-3.5 h-3.5" />
+                <a href={personalInfo.social.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-primary-500 transition-colors">LINKEDIN</a>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Mail className="w-3.5 h-3.5" />
+                <a href={`mailto:${personalInfo.email}`} className="hover:text-primary-500 transition-colors">EMAIL</a>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+
+          {/* Right Column: Interactive Constellation Graph */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="lg:col-span-5 relative"
+          >
+            <SystemGraph />
+          </motion.div>
+
+        </div>
       </div>
 
       {/* Scroll indicator */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:block"
       >
         <a 
           href="#about" 
-          className="flex flex-col items-center text-dark-400 hover:text-primary-500 transition-colors"
+          className="flex flex-col items-center text-dark-400 hover:text-primary-500 transition-colors font-mono text-[9px] tracking-widest uppercase"
         >
-          <span className="text-sm mb-2">Scroll Down</span>
+          <span>SYS.SCROLL</span>
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
+            className="mt-1"
           >
-            <ArrowDown className="w-5 h-5" />
+            <ArrowDown className="w-4 h-4" />
           </motion.div>
         </a>
       </motion.div>

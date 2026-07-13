@@ -7,43 +7,40 @@
    Clean Blue + Violet Theme
    ============================================ */
 :root {
-  /* Background Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
+  /* Blueprint/Engineering System Theme Tokens */
+  --bg-primary: #f7f8fc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eff1f9;
   
-  /* Text Colors */
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-primary: #111318;
+  --text-secondary: #4b5262;
+  --text-muted: #828a9b;
   
-  /* Accent Colors */
-  --color-primary: #3b82f6;
-  --color-primary-light: #60a5fa;
-  --color-primary-dark: #2563eb;
-  --color-accent: #8b5cf6;
-  --color-accent-light: #a78bfa;
-  --color-success: #22c55e;
+  --color-primary: #315bff;
+  --color-primary-light: #5b7cff;
+  --color-primary-dark: #1f3ec6;
+  --color-accent: #6d28d9;
+  --color-accent-light: #8b5cf6;
+  --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
   
-  /* Borders */
-  --border-color: #e2e8f0;
-  --border-hover: #cbd5e1;
+  --border-color: #e2e6f0;
+  --border-hover: #cbd2e1;
 }
 
 .dark {
-  /* Dark Mode */
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
+  /* Dark Mode Engineering System Tokens */
+  --bg-primary: #080a0f;
+  --bg-secondary: #10131a;
+  --bg-tertiary: #151922;
   
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-primary: #f5f7fa;
+  --text-secondary: #a3a9b6;
+  --text-muted: #646b7a;
   
-  --border-color: #334155;
-  --border-hover: #475569;
+  --border-color: #1e2433;
+  --border-hover: #2e374d;
 }
 
 /* Base Styles */
@@ -204,11 +201,23 @@
   
   /* Glow Effects */
   .glow-primary {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 30px rgba(49, 91, 255, 0.3);
   }
   
   .glow-accent {
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 30px rgba(109, 40, 217, 0.3);
+  }
+
+  .bg-grid-blueprint {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(49, 91, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(49, 91, 255, 0.03) 1px, transparent 1px);
+  }
+  .dark .bg-grid-blueprint {
+    background-image: 
+      linear-gradient(to right, rgba(49, 91, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(49, 91, 255, 0.045) 1px, transparent 1px);
   }
 }
 

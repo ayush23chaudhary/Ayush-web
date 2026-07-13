@@ -1,252 +1,220 @@
-import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { SectionHeader } from '../ui';
-import { skillCategories } from '../../data';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SectionHeader, Card, Badge } from '../ui';
+import { skillCategories, projects } from '../../data';
+import { Terminal, Code2, Network, Cpu, Database, Link, ArrowRight } from 'lucide-react';
 
 const Skills = () => {
-  const [hoveredCategory, setHoveredCategory] = useState(null);
+  const [selectedCategoryIdx, setSelectedCategoryIdx] = useState(0);
+  const [activeSkill, setActiveSkill] = useState(null);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+  const activeCategory = skillCategories[selectedCategoryIdx];
+
+  // Map skill icons to Lucide icons
+  const iconMap = {
+    Code2: Code2,
+    Layers: Cpu,
+    Cloud: Database,
+    Wrench: Terminal,
+    Lightbulb: Network,
+    Terminal: Terminal,
+    Database: Database,
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { 
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+  const CategoryIcon = iconMap[activeCategory.icon] || Code2;
+
+  // Find all projects that use a particular skill
+  const getProjectsUsingSkill = (skillName) => {
+    return projects.filter(project => 
+      project.technologies.some(tech => tech.toLowerCase() === skillName.toLowerCase())
+    );
   };
 
-  // Professional color schemes for each category
-  const categoryStyles = {
-    "Programming Languages": {
-      accent: "from-blue-500 to-blue-600",
-      accentSolid: "bg-blue-500",
-      bg: "bg-blue-50/50 dark:bg-blue-950/20",
-      border: "border-blue-200/50 dark:border-blue-800/30",
-      text: "text-blue-700 dark:text-blue-300",
-      iconBg: "bg-blue-500/10 dark:bg-blue-500/20",
-    },
-    "Web Technologies": {
-      accent: "from-purple-500 to-purple-600",
-      accentSolid: "bg-purple-500",
-      bg: "bg-purple-50/50 dark:bg-purple-950/20",
-      border: "border-purple-200/50 dark:border-purple-800/30",
-      text: "text-purple-700 dark:text-purple-300",
-      iconBg: "bg-purple-500/10 dark:bg-purple-500/20",
-    },
-    "Databases & Cloud": {
-      accent: "from-green-500 to-green-600",
-      accentSolid: "bg-green-500",
-      bg: "bg-green-50/50 dark:bg-green-950/20",
-      border: "border-green-200/50 dark:border-green-800/30",
-      text: "text-green-700 dark:text-green-300",
-      iconBg: "bg-green-500/10 dark:bg-green-500/20",
-    },
-    "DevOps & Tools": {
-      accent: "from-orange-500 to-orange-600",
-      accentSolid: "bg-orange-500",
-      bg: "bg-orange-50/50 dark:bg-orange-950/20",
-      border: "border-orange-200/50 dark:border-orange-800/30",
-      text: "text-orange-700 dark:text-orange-300",
-      iconBg: "bg-orange-500/10 dark:bg-orange-500/20",
-    },
-    "CS Fundamentals": {
-      accent: "from-indigo-500 to-indigo-600",
-      accentSolid: "bg-indigo-500",
-      bg: "bg-indigo-50/50 dark:bg-indigo-950/20",
-      border: "border-indigo-200/50 dark:border-indigo-800/30",
-      text: "text-indigo-700 dark:text-indigo-300",
-      iconBg: "bg-indigo-500/10 dark:bg-indigo-500/20",
-    },
-    "Machine Learning": {
-      accent: "from-rose-500 to-rose-600",
-      accentSolid: "bg-rose-500",
-      bg: "bg-rose-50/50 dark:bg-rose-950/20",
-      border: "border-rose-200/50 dark:border-rose-800/30",
-      text: "text-rose-700 dark:text-rose-300",
-      iconBg: "bg-rose-500/10 dark:bg-rose-500/20",
-    }
-  };
-
-  const getStyles = (categoryName) => {
-    return categoryStyles[categoryName] || {
-      accent: "from-gray-500 to-gray-600",
-      accentSolid: "bg-gray-500",
-      bg: "bg-gray-50/50 dark:bg-gray-950/20",
-      border: "border-gray-200/50 dark:border-gray-800/30",
-      text: "text-gray-700 dark:text-gray-300",
-      iconBg: "bg-gray-500/10 dark:bg-gray-500/20",
-    };
-  };
-
-  const getProficiencyLabel = (level) => {
-    if (level >= 90) return "Expert";
-    if (level >= 80) return "Advanced";
-    if (level >= 70) return "Proficient";
-    if (level >= 60) return "Intermediate";
-    return "Familiar";
-  };
+  const activeCategoryProjects = projects.filter(project =>
+    project.technologies.some(tech => 
+      activeCategory.skills.some(skill => skill.name.toLowerCase() === tech.toLowerCase())
+    )
+  );
 
   return (
     <section 
       id="skills" 
-      className="py-20 lg:py-32 bg-white dark:bg-dark-950"
-      aria-label="Skills section"
+      className="py-20 lg:py-32 bg-dark-50 dark:bg-dark-900 border-y border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
     >
-      <div className="section-container">
+      {/* Blueprint grid background */}
+      <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
+
+      <div className="section-container relative z-10">
         <SectionHeader
-          subtitle="Skills"
-          title="Tech Stack"
-          description="Technologies and tools I use to bring ideas to life"
+          badge="Engineering"
+          title="Knowledge Graph"
+          subtitle="System relationships between languages, tools, and platforms"
+          align="left"
         />
 
-        {/* Category Tiles Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {skillCategories.map((category, categoryIndex) => {
-            const styles = getStyles(category.name);
-            const isHovered = hoveredCategory === categoryIndex;
-            
-            return (
-              <motion.div
-                key={categoryIndex}
-                variants={itemVariants}
-                onMouseEnter={() => setHoveredCategory(categoryIndex)}
-                onMouseLeave={() => setHoveredCategory(null)}
-                className="relative"
-              >
-                {/* Main Category Tile */}
-                <motion.div
-                  className={`
-                    relative p-6 rounded-xl border ${styles.border} ${styles.bg}
-                    backdrop-blur-sm cursor-pointer
-                    transition-all duration-300
-                    hover:shadow-xl
-                    min-h-[120px]
-                  `}
-                  animate={{
-                    y: isHovered ? -4 : 0,
+        <div className="grid lg:grid-cols-12 gap-8 mt-12 items-start">
+          
+          {/* Left Panel: Category Selector Nodes */}
+          <div className="lg:col-span-4 space-y-3">
+            <div className="text-[10px] font-mono text-dark-400 tracking-widest uppercase mb-4">
+              SYS.GRAPH / INDEX_SELECTION
+            </div>
+            {skillCategories.map((category, idx) => {
+              const isSelected = selectedCategoryIdx === idx;
+              const Icon = iconMap[category.icon] || Code2;
+              
+              return (
+                <button
+                  key={category.name}
+                  onClick={() => {
+                    setSelectedCategoryIdx(idx);
+                    setActiveSkill(null);
                   }}
-                  transition={{ duration: 0.3 }}
+                  className={`w-full flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-300 ${
+                    isSelected 
+                      ? 'bg-primary-500/10 text-primary-500 border-primary-500/30' 
+                      : 'bg-white dark:bg-dark-900 text-dark-700 dark:text-dark-300 border-dark-200 dark:border-dark-800 hover:border-primary-500/30'
+                  }`}
                 >
-                  {/* Category Header */}
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className={`p-2.5 rounded-lg ${styles.iconBg}`}>
-                      <div className="w-5 h-5 bg-current opacity-80" style={{ 
-                        WebkitMaskImage: 'linear-gradient(135deg, transparent 30%, black 100%)',
-                        maskImage: 'linear-gradient(135deg, transparent 30%, black 100%)'
-                      }} />
+                  <div className="flex items-center gap-3.5">
+                    <div className={`p-2 rounded-lg ${
+                      isSelected ? 'bg-primary-500 text-white' : 'bg-dark-100 dark:bg-dark-800 text-dark-500'
+                    }`}>
+                      <Icon className="w-4 h-4" />
                     </div>
-                    <h3 className={`text-lg font-bold ${styles.text}`}>
-                      {category.name}
-                    </h3>
+                    <div>
+                      <h4 className={`text-sm font-bold ${isSelected ? 'text-primary-600 dark:text-primary-400' : 'text-dark-900 dark:text-white'}`}>
+                        {category.name}
+                      </h4>
+                      <p className="text-[10px] text-dark-400 dark:text-dark-500 font-mono tracking-wider mt-0.5 uppercase">
+                        {category.skills.length} MODULES
+                      </p>
+                    </div>
                   </div>
+                  {isSelected && <ArrowRight className="w-4 h-4 text-primary-500" />}
+                </button>
+              );
+            })}
+          </div>
 
-                  {/* Skill Count */}
-                  <p className="text-sm text-dark-600 dark:text-dark-400 ml-12">
-                    {category.skills.length} technologies
-                  </p>
+          {/* Right Panel: Interconnected Relationship Canvas */}
+          <div className="lg:col-span-8 grid md:grid-cols-2 gap-6 h-full">
+            
+            {/* Cluster Skills List */}
+            <Card className="p-6 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 flex flex-col">
+              <div className="flex items-center gap-2 mb-4 border-b border-dark-100 dark:border-dark-800 pb-3">
+                <CategoryIcon className="w-4 h-4 text-primary-500" />
+                <span className="text-[11px] font-mono text-primary-500 uppercase tracking-widest font-bold">
+                  {activeCategory.name} / CLUSTER
+                </span>
+              </div>
 
-                  {/* Hover Indicator */}
-                  <motion.div
-                    className={`absolute bottom-4 right-4 ${styles.text}`}
-                    animate={{
-                      x: isHovered ? 4 : 0,
-                      opacity: isHovered ? 1 : 0.4
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </motion.div>
-
-                  {/* Accent Border on Hover */}
-                  <motion.div
-                    className={`absolute inset-0 rounded-xl border-2 border-transparent`}
-                    animate={{
-                      borderColor: isHovered ? 'currentColor' : 'transparent',
-                    }}
-                    style={{ color: styles.text.replace('text-', 'rgb(var(--') }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-
-                {/* Expanded Skills Panel - Opens Downward */}
-                <AnimatePresence>
-                  {isHovered && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="absolute top-full left-0 right-0 z-20 mt-2 overflow-hidden"
+              <div className="space-y-4 flex-grow">
+                {activeCategory.skills.map((skill) => {
+                  const isActive = activeSkill?.name === skill.name;
+                  const projectsUsing = getProjectsUsingSkill(skill.name);
+                  
+                  return (
+                    <div
+                      key={skill.name}
+                      onMouseEnter={() => setActiveSkill(skill)}
+                      onClick={() => setActiveSkill(skill)}
+                      className={`p-3.5 rounded-xl border cursor-pointer transition-all duration-200 ${
+                        isActive 
+                          ? 'bg-primary-500/5 border-primary-500/40' 
+                          : 'bg-dark-50/50 dark:bg-dark-900/50 border-dark-200 dark:border-dark-800/50 hover:border-dark-300 dark:hover:border-dark-700'
+                      }`}
                     >
-                      <div className={`
-                        p-5 rounded-xl border ${styles.border}
-                        bg-white dark:bg-dark-900
-                        shadow-2xl
-                        max-h-[400px] overflow-y-auto
-                      `}>
-                        <div className="space-y-3">
-                          {category.skills.map((skill, skillIndex) => (
-                            <motion.div
-                              key={skillIndex}
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ duration: 0.3, delay: skillIndex * 0.05 }}
-                              className="space-y-2"
-                            >
-                              {/* Skill Name and Percentage */}
-                              <div className="flex items-center justify-between">
-                                <span className="text-sm font-semibold text-dark-800 dark:text-dark-200">
-                                  {skill.name}
-                                </span>
-                                <span className={`text-xs font-bold ${styles.text}`}>
-                                  {skill.level}%
-                                </span>
-                              </div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-semibold text-dark-900 dark:text-white">
+                          {skill.name}
+                        </span>
+                        <Badge variant="primary" size="sm" className="font-mono text-[9px]">
+                          {skill.level}%
+                        </Badge>
+                      </div>
 
-                              {/* Horizontal Progress Bar */}
-                              <div className="h-2 bg-dark-100 dark:bg-dark-800 rounded-full overflow-hidden">
-                                <motion.div
-                                  className={`h-full bg-gradient-to-r ${styles.accent} rounded-full`}
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${skill.level}%` }}
-                                  transition={{ duration: 0.8, delay: skillIndex * 0.05 + 0.2, ease: "easeOut" }}
-                                />
-                              </div>
+                      {/* Dependency links marker */}
+                      <div className="flex items-center gap-1.5 text-[9px] font-mono text-dark-400">
+                        <Link className="w-3 h-3" />
+                        <span>CONNECTED TO {projectsUsing.length} SYSTEMS</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Card>
 
-                              {/* Proficiency Label */}
-                              <div className="text-xs text-dark-500 dark:text-dark-400">
-                                {getProficiencyLabel(skill.level)}
-                              </div>
-                            </motion.div>
-                          ))}
+            {/* Selected Skill / Dependencies Connection Panel */}
+            <Card className="p-6 bg-white dark:bg-dark-900 border border-dark-200 dark:border-dark-800 flex flex-col justify-between">
+              <div>
+                <div className="text-[10px] font-mono text-dark-400 tracking-widest uppercase mb-4 border-b border-dark-100 dark:border-dark-800 pb-2">
+                  SYS.ROUTING / SYSTEM_LINKS
+                </div>
+
+                <AnimatePresence mode="wait">
+                  {activeSkill ? (
+                    <motion.div
+                      key={activeSkill.name}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -10 }}
+                      className="space-y-6"
+                    >
+                      <div>
+                        <h4 className="text-base font-bold text-dark-900 dark:text-white">
+                          {activeSkill.name}
+                        </h4>
+                        <p className="text-xs text-dark-500 dark:text-dark-400 font-mono mt-1 uppercase">
+                          MODULE PROFICIENCY: {activeSkill.level}%
+                        </p>
+                      </div>
+
+                      {/* Associated Projects Section */}
+                      <div>
+                        <div className="text-[9px] font-mono text-dark-400 tracking-wider uppercase mb-3">
+                          INTEGRATED IN SYSTEMS:
                         </div>
+                        {getProjectsUsingSkill(activeSkill.name).length > 0 ? (
+                          <div className="space-y-2">
+                            {getProjectsUsingSkill(activeSkill.name).map((project) => (
+                              <div
+                                key={project.id}
+                                className="flex items-center justify-between p-2.5 rounded-lg bg-dark-50 dark:bg-dark-950 border border-dark-200 dark:border-dark-800/80"
+                              >
+                                <span className="text-xs font-semibold text-dark-800 dark:text-dark-200">
+                                  {project.title.split(' – ')[0]}
+                                </span>
+                                <span className="text-[8px] font-mono text-primary-500 uppercase">
+                                  {project.category}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="p-3 rounded-lg border border-dashed border-dark-200 dark:border-dark-800 text-[10px] font-mono text-dark-400 text-center">
+                            NO ACTIVE SYSTEMS ATTACHED
+                          </div>
+                        )}
                       </div>
                     </motion.div>
+                  ) : (
+                    <div className="py-12 text-center text-dark-400 font-mono text-xs leading-relaxed">
+                      HOVER OR CLICK ON A TECHNOLOGY CLUSTER ON THE LEFT LIST TO INSPECT GRAPH CONNECTIONS & SYS_REFS.
+                    </div>
                   )}
                 </AnimatePresence>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+              </div>
+
+              {/* Status footer inside card */}
+              <div className="border-t border-dark-100 dark:border-dark-800 pt-3 mt-6 flex justify-between items-center text-[8px] font-mono text-dark-400">
+                <span>GRAPH REF: [K_FLOW]</span>
+                <span>STATUS: STABLE</span>
+              </div>
+            </Card>
+
+          </div>
+        </div>
       </div>
     </section>
   );

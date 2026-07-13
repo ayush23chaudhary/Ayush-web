@@ -48,6 +48,7 @@ export default {
       fontFamily: {
         body: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
         'gradient': 'gradient 3s linear infinite',
