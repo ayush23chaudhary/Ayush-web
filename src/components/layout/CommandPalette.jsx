@@ -10,20 +10,20 @@ const CommandPalette = ({ isOpen, onClose }) => {
   const inputRef = useRef(null);
   const listRef = useRef(null);
 
-  const [isDarkMode, setIsDarkMode] = useState(
-    document.documentElement.classList.contains('dark')
-  );
+  // Always read dark state from the DOM so we stay in sync with Navbar toggle
+  const isDarkMode = document.documentElement.classList.contains('dark');
 
   const toggleTheme = () => {
+    const root = document.documentElement;
     if (isDarkMode) {
-      document.documentElement.classList.remove('dark');
+      root.classList.remove('dark');
       localStorage.setItem('theme', 'light');
-      setIsDarkMode(false);
     } else {
-      document.documentElement.classList.add('dark');
+      root.classList.add('dark');
       localStorage.setItem('theme', 'dark');
-      setIsDarkMode(true);
     }
+    // Dispatch storage event so Navbar's useEffect can stay aware (same-tab)
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: { dark: !isDarkMode } }));
     onClose();
   };
 

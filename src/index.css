@@ -47,11 +47,22 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    @apply bg-white;
+  }
+
+  .dark html,
+  html.dark {
+    background-color: #080a0f;
   }
   
   body {
-    @apply font-body antialiased bg-white dark:bg-dark-900 text-dark-900 dark:text-dark-50;
+    @apply font-body antialiased bg-white text-dark-900;
     @apply transition-colors duration-300;
+  }
+
+  .dark body {
+    background-color: #080a0f;
+    color: #f8fafc;
   }
 
   /* Clean scrollbar */

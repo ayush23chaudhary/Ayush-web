@@ -51,11 +51,18 @@ const Navbar = () => {
       }
     };
 
+    // Keep isDark state in sync if CommandPalette or external code mutates the DOM class
+    const handleThemeChange = (e) => {
+      setIsDark(e.detail.dark);
+    };
+
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('themeChange', handleThemeChange);
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('themeChange', handleThemeChange);
     };
   }, []);
 
