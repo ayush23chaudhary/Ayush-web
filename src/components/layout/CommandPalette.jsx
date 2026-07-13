@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CornerDownLeft, Sparkles, Folder, Terminal, Compass, Briefcase, Mail, Download, Moon, Sun } from 'lucide-react';
 import { personalInfo } from '../../data';
+import { Badge } from '../ui';
 
 const CommandPalette = ({ isOpen, onClose }) => {
   const [search, setSearch] = useState('');
