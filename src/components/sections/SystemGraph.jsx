@@ -112,7 +112,7 @@ const SystemGraph = () => {
     { source: 'fullstack', target: 'diagramnote' }
   ];
 
-  // Auto cycling logic
+  // Stable Auto Cycling logic
   useEffect(() => {
     if (isAutoCycle) {
       autoCycleTimer.current = setInterval(() => {
@@ -121,12 +121,18 @@ const SystemGraph = () => {
           setActiveNode(nodes[nextIndex]);
           return nextIndex;
         });
-      }, 4000); // Shift every 4 seconds
+      }, 4000);
     } else {
-      clearInterval(autoCycleTimer.current);
+      if (autoCycleTimer.current) {
+        clearInterval(autoCycleTimer.current);
+      }
     }
 
-    return () => clearInterval(autoCycleTimer.current);
+    return () => {
+      if (autoCycleTimer.current) {
+        clearInterval(autoCycleTimer.current);
+      }
+    };
   }, [isAutoCycle]);
 
   // Set initial active node on mount
@@ -134,14 +140,13 @@ const SystemGraph = () => {
     setActiveNode(nodes[0]);
   }, []);
 
-  const handleNodeHover = (node) => {
-    setIsAutoCycle(false); // Pause auto cycling when user hovers manually
+  const handleNodeHover = (node, index) => {
+    setIsAutoCycle(false);
     setActiveNode(node);
+    setCycleIndex(index);
   };
 
   const handleMouseLeave = () => {
-    // Optional: Resume auto-cycle after mouse leaves, or let the user toggle it back.
-    // Let's resume it automatically after a short delay for continuous liveliness.
     setIsAutoCycle(true);
   };
 
@@ -188,7 +193,7 @@ const SystemGraph = () => {
       </svg>
 
       {/* Nodes layer */}
-      {nodes.map((node) => {
+      {nodes.map((node, index) => {
         const Icon = node.icon;
         const isActive = activeNode && activeNode.id === node.id;
         
@@ -204,7 +209,7 @@ const SystemGraph = () => {
             animate={{
               scale: isActive ? 1.15 : 1,
             }}
-            onMouseEnter={() => handleNodeHover(node)}
+            onMouseEnter={() => handleNodeHover(node, index)}
             onMouseLeave={handleMouseLeave}
             className="cursor-pointer z-10 select-none group"
           >
@@ -252,7 +257,7 @@ const SystemGraph = () => {
       </div>
 
       {/* Detail overlay */}
-      <div className="absolute bottom-12 left-4 right-4 h-24 pointer-events-none">
+      <div className="absolute bottom-4 left-4 right-4 h-24 pointer-events-none">
         <AnimatePresence mode="wait">
           {activeNode && (
             <motion.div
@@ -261,7 +266,7 @@ const SystemGraph = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
               transition={{ duration: 0.25 }}
-              className="bg-white/90 dark:bg-dark-900/90 backdrop-blur-md p-4 rounded-xl border border-dark-200 dark:border-dark-800 shadow-xl pointer-events-auto"
+              className="bg-white/95 dark:bg-dark-900/95 backdrop-blur-md p-4 rounded-xl border border-dark-200 dark:border-dark-800 shadow-xl pointer-events-auto"
             >
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
