@@ -1,12 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Braces, Sparkles, Folder, Heart, Play, Pause, RefreshCw } from 'lucide-react';
+import { Terminal, Braces, Sparkles, Folder, Heart } from 'lucide-react';
 
 const SystemGraph = () => {
   const [activeNode, setActiveNode] = useState(null);
-  const [isAutoCycle, setIsAutoCycle] = useState(true);
-  const [cycleIndex, setCycleIndex] = useState(0);
-  const autoCycleTimer = useRef(null);
 
   // Nodes position inside a 500x500 box (scaled dynamically)
   const nodes = [
@@ -112,40 +109,6 @@ const SystemGraph = () => {
     { source: 'fullstack', target: 'diagramnote' }
   ];
 
-  // Stable Auto Cycling logic
-  useEffect(() => {
-    if (isAutoCycle) {
-      autoCycleTimer.current = setInterval(() => {
-        setCycleIndex((prevIndex) => {
-          const nextIndex = (prevIndex + 1) % nodes.length;
-          setActiveNode(nodes[nextIndex]);
-          return nextIndex;
-        });
-      }, 4000);
-    } else {
-      if (autoCycleTimer.current) {
-        clearInterval(autoCycleTimer.current);
-      }
-    }
-
-    return () => {
-      if (autoCycleTimer.current) {
-        clearInterval(autoCycleTimer.current);
-      }
-    };
-  }, [isAutoCycle]);
-
-  // Set initial active node on mount
-  useEffect(() => {
-    setActiveNode(nodes[0]);
-  }, []);
-
-  const handleNodeHover = (node, index) => {
-    setIsAutoCycle(false); // Stop automatic cycle completely when user starts interacting
-    setActiveNode(node);
-    setCycleIndex(index);
-  };
-
   return (
     <div className="relative w-full aspect-square max-w-[500px] mx-auto bg-dark-50/20 dark:bg-dark-900/10 rounded-3xl border border-dark-200/50 dark:border-dark-800/50 p-4 overflow-hidden bg-grid-blueprint">
       
@@ -189,7 +152,7 @@ const SystemGraph = () => {
       </svg>
 
       {/* Nodes layer */}
-      {nodes.map((node, index) => {
+      {nodes.map((node) => {
         const Icon = node.icon;
         const isActive = activeNode && activeNode.id === node.id;
         
@@ -202,15 +165,14 @@ const SystemGraph = () => {
               top: node.y,
               transform: 'translate(-50%, -50%)',
             }}
-            animate={{
-              scale: isActive ? 1.15 : 1,
-            }}
-            onMouseEnter={() => handleNodeHover(node, index)}
+            whileHover={{ scale: 1.12 }}
+            onMouseEnter={() => setActiveNode(node)}
+            onMouseLeave={() => setActiveNode(null)}
             className="cursor-pointer z-10 select-none group"
           >
             <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 shadow-sm transition-all duration-300 ${
               isActive 
-                ? 'bg-primary-500/20 border-primary-500 shadow-primary-500/30 scale-110' 
+                ? 'bg-primary-500/20 border-primary-500 shadow-primary-500/30' 
                 : `${node.fill} group-hover:shadow-primary-500/20`
             }`}>
               <Icon className={`w-5 h-5 ${node.color}`} />
@@ -231,32 +193,19 @@ const SystemGraph = () => {
         );
       })}
 
-      {/* Blueprint Annotations & Manual Controls */}
-      <div className="absolute top-3 left-3 flex items-center gap-3">
-        <span className="text-[8px] font-mono text-dark-400 tracking-widest uppercase">
-          SYS.NODE_MAP / ACT_01
-        </span>
-        <button
-          onClick={() => setIsAutoCycle(!isAutoCycle)}
-          className="p-1 rounded bg-dark-100 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-dark-500 hover:text-primary-500 dark:hover:text-primary-400 transition-colors flex items-center gap-1 text-[8px] font-mono"
-          title={isAutoCycle ? "Pause Auto Scan" : "Resume Auto Scan"}
-        >
-          {isAutoCycle ? <Pause className="w-2 h-2" /> : <Play className="w-2 h-2" />}
-          <span>{isAutoCycle ? "AUTO_SCAN" : "MANUAL"}</span>
-        </button>
+      {/* Blueprint Annotations */}
+      <div className="absolute top-3 left-3 text-[8px] font-mono text-dark-400 tracking-widest uppercase">
+        SYS.NODE_MAP / ACT_01
       </div>
-
-      <div className="absolute bottom-3 right-3 text-[8px] font-mono text-dark-400 tracking-widest flex items-center gap-2">
-        <RefreshCw className={`w-2.5 h-2.5 ${isAutoCycle ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }} />
-        <span>COORD: [250.250.50]</span>
+      <div className="absolute bottom-3 right-3 text-[8px] font-mono text-dark-400 tracking-widest">
+        COORD: [250.250.50]
       </div>
 
       {/* Detail overlay */}
       <div className="absolute bottom-4 left-4 right-4 h-24 pointer-events-none">
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {activeNode && (
             <motion.div
-              key={activeNode.id}
               initial={{ opacity: 0, y: 15, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
