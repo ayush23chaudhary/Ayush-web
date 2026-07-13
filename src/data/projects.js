@@ -157,11 +157,11 @@ export const projects = [
 export const getFeaturedProjects = () => projects.filter(p => p.featured);
 
 // Get projects by category
-export const getProjectsByCategory = (category) => 
+export const getProjectsByCategory = (category) =>
   projects.filter(p => p.category === category);
 
 // Get all unique categories
-export const getCategories = () => 
+export const getCategories = () =>
   [...new Set(projects.map(p => p.category))];
 
 export default projects;

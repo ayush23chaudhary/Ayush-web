@@ -250,12 +250,12 @@ const Projects = () => {
 
                   {/* Visual / image block */}
                   <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <div className="relative rounded-2xl border border-dark-200 dark:border-dark-800 bg-dark-50 dark:bg-dark-900 overflow-hidden group aspect-[4/3]">
+                    <div className="relative rounded-2xl border border-dark-200 dark:border-dark-800 bg-dark-50 dark:bg-dark-900 overflow-hidden group aspect-[4/3] flex items-center justify-center p-2">
                       {project.image ? (
                         <img
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                         />
                       ) : (
                         <div className="w-full h-full flex flex-col items-center justify-center bg-grid-blueprint gap-3">
