@@ -9,7 +9,7 @@ import {
   Resume, 
   Contact 
 } from './components/sections';
-import { ScrollProgress } from './components/effects';
+import { ScrollProgress, CursorGlow } from './components/effects';
 
 /**
  * Main App Component
@@ -20,6 +20,9 @@ function App() {
     <div className="min-h-screen bg-white dark:bg-dark-950 transition-colors duration-300 relative overflow-x-hidden">
       {/* Scroll Progress Indicator */}
       <ScrollProgress />
+
+      {/* Global cursor glow (desktop only) */}
+      <CursorGlow />
       
       {/* Navigation */}
       <Navbar />

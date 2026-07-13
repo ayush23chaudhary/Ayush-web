@@ -1,151 +1,216 @@
 import { motion } from 'framer-motion';
-import { GitPullRequest, GitMerge, ExternalLink, Github, Terminal } from 'lucide-react';
-import { SectionHeader, Card, Badge, Button } from '../ui';
+import { GitMerge, GitPullRequest, ExternalLink, Github, Flame } from 'lucide-react';
+import { SectionHeader, Button } from '../ui';
 import { openSourceContributions } from '../../data';
 
+/* ------------------------------------------------------------------
+   Status config → left-border colour + badge style
+------------------------------------------------------------------ */
+const STATUS_CONFIG = {
+  Merged: {
+    border: 'border-l-green-500',
+    badgeBg: 'bg-green-950/40 border-green-700',
+    badgeText: 'text-green-400',
+    icon: GitMerge,
+    dot: 'bg-green-500',
+    label: 'MERGED',
+    impact: 'HIGH',
+    impactColor: 'text-amber-400',
+  },
+  Open: {
+    border: 'border-l-primary-500',
+    badgeBg: 'bg-primary-950/40 border-primary-700',
+    badgeText: 'text-primary-400',
+    icon: GitPullRequest,
+    dot: 'bg-primary-500',
+    label: 'OPEN',
+    impact: 'ACTIVE',
+    impactColor: 'text-primary-400',
+  },
+  Closed: {
+    border: 'border-l-dark-600',
+    badgeBg: 'bg-dark-800 border-dark-600',
+    badgeText: 'text-dark-400',
+    icon: GitPullRequest,
+    dot: 'bg-dark-500',
+    label: 'CLOSED',
+    impact: 'REVIEWED',
+    impactColor: 'text-dark-400',
+  },
+};
+
+/* ------------------------------------------------------------------
+   Aggregate stats computed from contributions array
+------------------------------------------------------------------ */
+const getStats = (contributions) => ({
+  merged: contributions.filter(c => c.status === 'Merged').length,
+  open: contributions.filter(c => c.status === 'Open').length,
+  closed: contributions.filter(c => c.status === 'Closed').length,
+  repos: [...new Set(contributions.map(c => c.repo))].length,
+});
+
 const OpenSource = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  };
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Merged':
-        return (
-          <Badge variant="success" size="sm" icon={GitMerge}>
-            Merged
-          </Badge>
-        );
-      case 'Open':
-        return (
-          <Badge variant="primary" size="sm" icon={GitPullRequest}>
-            Open
-          </Badge>
-        );
-      case 'Closed':
-        return (
-          <Badge variant="default" size="sm" icon={GitPullRequest}>
-            Closed
-          </Badge>
-        );
-      default:
-        return (
-          <Badge variant="default" size="sm">
-            {status}
-          </Badge>
-        );
-    }
-  };
+  const stats = getStats(openSourceContributions);
 
   return (
-    <section 
-      id="opensource" 
-      className="py-20 lg:py-32 bg-white dark:bg-dark-950"
-      aria-label="Open Source Contributions section"
+    <section
+      id="opensource"
+      className="py-20 lg:py-32 bg-dark-950 relative overflow-hidden"
+      aria-label="Open Source Contributions"
     >
-      <div className="section-container">
+      {/* Terminal-style scanline overlay */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 4px)',
+      }} />
+      {/* Blueprint grid in dark variant */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundSize: '40px 40px',
+        backgroundImage: `
+          linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px)
+        `,
+      }} />
+
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary-500/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="section-container relative z-10">
+        
+        {/* Header */}
         <SectionHeader
-          badge="Contributions"
+          badge="OSS"
           title="Open Source"
-          subtitle="My contributions to global open-source ecosystems"
+          subtitle="Contributions to the global developer ecosystem"
           align="center"
+          dark
         />
 
-        <motion.div 
-          className="grid md:grid-cols-2 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+        {/* Quick stats strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-6 mt-10 mb-12 pb-8 border-b border-dark-800"
         >
-          {openSourceContributions.map((contribution) => (
-            <motion.div
-              key={contribution.id}
-              variants={itemVariants}
-              className="h-full"
-            >
-              <Card 
-                variant="default"
-                className="h-full flex flex-col p-6 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10 hover:-translate-y-1 group border border-dark-200 dark:border-dark-800"
-              >
-                {/* Header info */}
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2 text-dark-600 dark:text-dark-400 font-semibold text-sm">
-                    <Github className="w-4 h-4 text-dark-900 dark:text-white" />
-                    <span className="group-hover:text-primary-500 transition-colors">
-                      {contribution.repo}
-                    </span>
-                  </div>
-                  {getStatusBadge(contribution.status)}
-                </div>
-
-                {/* PR Title */}
-                <h3 className="text-lg font-bold text-dark-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors">
-                  {contribution.title}
-                </h3>
-
-                {/* PR Description */}
-                <p className="text-dark-500 dark:text-dark-400 text-sm mb-6 flex-grow">
-                  {contribution.description}
-                </p>
-
-                {/* Footer elements */}
-                <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-dark-100 dark:border-dark-800">
-                  {/* Tech stack */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {contribution.technologies.map((tech) => (
-                      <Badge key={tech} variant="secondary" size="xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {/* PR Link */}
-                  <a
-                    href={contribution.prUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-xs font-semibold text-primary-500 hover:text-primary-600 transition-colors"
-                  >
-                    View PR
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </Card>
-            </motion.div>
+          {[
+            { value: stats.merged, label: 'MERGED', color: 'text-green-400' },
+            { value: stats.open, label: 'OPEN', color: 'text-primary-400' },
+            { value: stats.closed, label: 'CLOSED', color: 'text-dark-400' },
+            { value: stats.repos, label: 'REPOS', color: 'text-accent-400' },
+          ].map(({ value, label, color }) => (
+            <div key={label} className="text-center">
+              <div className={`text-2xl font-bold font-mono ${color}`}>{value}</div>
+              <div className="text-[9px] font-mono text-dark-500 tracking-widest uppercase mt-0.5">{label}</div>
+            </div>
           ))}
         </motion.div>
 
-        {/* GitHub link */}
-        <motion.div 
-          className="text-center mt-12"
+        {/* PR Diff Cards */}
+        <div className="grid md:grid-cols-2 gap-5">
+          {openSourceContributions.map((pr, i) => {
+            const cfg = STATUS_CONFIG[pr.status] || STATUS_CONFIG.Closed;
+            const StatusIcon = cfg.icon;
+
+            return (
+              <motion.div
+                key={pr.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className={`
+                  group relative rounded-xl overflow-hidden
+                  bg-dark-900 border border-dark-800
+                  border-l-4 ${cfg.border}
+                  hover:border-dark-700 hover:shadow-2xl hover:shadow-black/40
+                  transition-all duration-300
+                `}
+              >
+                {/* Card inner */}
+                <div className="p-5">
+                  {/* Top row: repo + status badge */}
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <Github className="w-3.5 h-3.5 text-dark-400" />
+                      <span className="text-xs font-mono font-semibold text-dark-300 group-hover:text-white transition-colors">
+                        {pr.repo}
+                      </span>
+                    </div>
+                    <div className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[9px] font-mono font-bold tracking-wider ${cfg.badgeBg} ${cfg.badgeText}`}>
+                      <span className={`w-1 h-1 rounded-full ${cfg.dot} ${pr.status === 'Open' ? 'animate-pulse' : ''}`} />
+                      <StatusIcon className="w-2.5 h-2.5" />
+                      {cfg.label}
+                    </div>
+                  </div>
+
+                  {/* PR title (used as bold heading) */}
+                  <h3 className="text-sm font-bold text-dark-100 group-hover:text-white transition-colors mb-2 leading-snug">
+                    {pr.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-xs text-dark-400 leading-relaxed mb-4 font-sans">
+                    {pr.description}
+                  </p>
+
+                  {/* Footer: tech chips + impact + link */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-dark-800">
+                    {/* Tech chips */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {pr.technologies?.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-800 text-dark-400 border border-dark-700"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-3 ml-auto">
+                      {/* Impact label */}
+                      <div className="flex items-center gap-1 text-[9px] font-mono">
+                        <Flame className={`w-3 h-3 ${cfg.impactColor}`} />
+                        <span className={cfg.impactColor}>{cfg.impact}</span>
+                      </div>
+
+                      {/* PR link */}
+                      <a
+                        href={pr.prUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[9px] font-mono text-primary-400 hover:text-primary-300 transition-colors"
+                      >
+                        VIEW PR
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* GitHub CTA */}
+        <motion.div
+          className="text-center mt-14"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          <Button 
-            href="https://github.com/ayush23chaudhary" 
-            variant="outline" 
+          <Button
+            href="https://github.com/ayush23chaudhary"
+            variant="outline"
             size="lg"
-            icon={Github}
             target="_blank"
             rel="noopener noreferrer"
+            className="font-mono text-xs tracking-wider border-dark-600 text-dark-300 hover:border-primary-500 hover:text-primary-400"
           >
-            Explore My GitHub
+            <Github className="w-4 h-4 mr-2" />
+            EXPLORE GITHUB PROFILE
           </Button>
         </motion.div>
       </div>

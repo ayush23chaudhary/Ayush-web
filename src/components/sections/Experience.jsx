@@ -1,29 +1,39 @@
 import { motion } from 'framer-motion';
-import { Briefcase, GraduationCap, Calendar, MapPin, Award, Terminal } from 'lucide-react';
-import { SectionHeader, Card, Badge } from '../ui';
+import { Briefcase, GraduationCap, Calendar, MapPin, Award, Terminal, ChevronRight } from 'lucide-react';
+import { SectionHeader } from '../ui';
 import { workExperience, education, certifications, hackathons } from '../../data';
 
-const Experience = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
+/* ------------------------------------------------------------------
+   Build a unified, date-sorted timeline from work + education
+------------------------------------------------------------------ */
+const buildTimeline = () => {
+  const work = workExperience.map(e => ({ ...e, _type: 'work' }));
+  const edu = education.map(e => ({ ...e, _type: 'education', period: e.duration || e.period }));
+  return [...work, ...edu].sort((a, b) => {
+    const yearA = parseInt((a.period || '').split(/[–\-]/).pop()?.trim()) || 0;
+    const yearB = parseInt((b.period || '').split(/[–\-]/).pop()?.trim()) || 0;
+    return yearB - yearA;
+  });
+};
 
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { 
-      opacity: 1, 
-      x: 0,
-      transition: { duration: 0.5 }
-    }
-  };
+/* ------------------------------------------------------------------
+   Animated timeline node dot
+------------------------------------------------------------------ */
+const NodeDot = ({ color }) => (
+  <div className={`relative flex-shrink-0 w-4 h-4 rounded-full border-2 ${color} bg-white dark:bg-dark-950 z-10`}>
+    <span className={`absolute inset-0.5 rounded-full ${color.replace('border-', 'bg-').split(' ')[0]} opacity-60`} />
+  </div>
+);
+
+/* ------------------------------------------------------------------
+   Main Experience section
+------------------------------------------------------------------ */
+const Experience = () => {
+  const timeline = buildTimeline();
 
   return (
-    <section 
-      id="experience" 
+    <section
+      id="experience"
       className="py-20 lg:py-32 bg-dark-50 dark:bg-dark-900 border-b border-dark-200/50 dark:border-dark-800/50 relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none bg-grid-blueprint" />
@@ -32,194 +42,177 @@ const Experience = () => {
         <SectionHeader
           badge="Journey"
           title="Engineering Timeline"
-          subtitle="A precise sequence of roles, educational milestones, and system benchmarks"
+          subtitle="A sequence of roles, education, and milestones — in order of impact"
           align="left"
         />
 
         <div className="grid lg:grid-cols-12 gap-12 mt-12">
-          
-          {/* Left Column: Timeline Tracks (Work + Education) */}
-          <div className="lg:col-span-8 space-y-12">
-            
-            {/* Work Track */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-lg bg-primary-500/10 border border-primary-500/20 text-primary-500">
-                  <Briefcase className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold font-mono tracking-widest text-dark-900 dark:text-white uppercase">
-                  [TRACK_01_WORK]
-                </h3>
-              </div>
 
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="relative pl-6 border-l border-dark-200 dark:border-dark-800 space-y-8"
-              >
-                {workExperience.map((exp, idx) => (
-                  <motion.div key={idx} variants={itemVariants} className="relative">
-                    {/* Timeline Node dot */}
-                    <div className="absolute -left-[30px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-dark-900 border-2 border-primary-500 flex items-center justify-center">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-                    </div>
-
-                    <Card className="p-5 border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900">
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                        <h4 className="font-bold text-dark-900 dark:text-white text-base">{exp.title}</h4>
-                        <Badge variant="primary" size="sm" className="font-mono text-[9px]">
-                          {exp.type.toUpperCase()}
-                        </Badge>
-                      </div>
-                      <p className="text-primary-600 dark:text-primary-400 font-semibold text-sm mb-3">{exp.company}</p>
-                      
-                      <div className="flex flex-wrap gap-4 text-xs text-dark-400 font-mono mb-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {exp.period}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3.5 h-3.5" />
-                          {exp.location}
-                        </span>
-                      </div>
-
-                      <ul className="space-y-2">
-                        {exp.achievements?.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-dark-600 dark:text-dark-400">
-                            <span className="text-primary-500 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-current" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </Card>
-                  </motion.div>
-                ))}
-              </motion.div>
+          {/* ── Left: Unified timeline ── */}
+          <div className="lg:col-span-8">
+            <div className="text-[9px] font-mono text-dark-400 tracking-widest uppercase mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+              SYS.TIMELINE / CAREER_LOG
             </div>
 
-            {/* Education Track */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-500">
-                  <GraduationCap className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold font-mono tracking-widest text-dark-900 dark:text-white uppercase">
-                  [TRACK_02_EDUCATION]
-                </h3>
-              </div>
+            <div className="relative">
+              {/* Vertical connecting line */}
+              <div className="absolute left-[7px] top-0 bottom-0 w-px bg-dark-200 dark:bg-dark-800" />
 
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="relative pl-6 border-l border-dark-200 dark:border-dark-800 space-y-8"
-              >
-                {education.map((edu, idx) => (
-                  <motion.div key={idx} variants={itemVariants} className="relative">
-                    {/* Timeline Node dot */}
-                    <div className="absolute -left-[30px] top-1.5 w-4 h-4 rounded-full bg-white dark:bg-dark-900 border-2 border-purple-500 flex items-center justify-center">
-                      <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                    </div>
+              <div className="space-y-8">
+                {timeline.map((item, idx) => {
+                  const isWork = item._type === 'work';
+                  const accentColor = isWork ? 'border-primary-500' : 'border-purple-500';
+                  const labelColor = isWork ? 'text-primary-500' : 'text-purple-500';
+                  const trackLabel = isWork ? 'WORK' : 'EDUCATION';
 
-                    <Card className="p-5 border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900">
-                      <h4 className="font-bold text-dark-900 dark:text-white text-base mb-1">{edu.degree}</h4>
-                      <p className="text-purple-600 dark:text-purple-400 font-semibold text-sm mb-3">{edu.institution}</p>
-                      
-                      <div className="flex flex-wrap gap-4 text-xs text-dark-400 font-mono mb-4">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          {edu.duration}
-                        </span>
-                        <span className="px-2 py-0.5 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-400 font-semibold">
-                          {edu.grade}
-                        </span>
+                  return (
+                    <motion.div
+                      key={`${item._type}-${idx}`}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: '-60px' }}
+                      transition={{ duration: 0.5, delay: idx * 0.07 }}
+                      className="flex gap-5"
+                    >
+                      {/* Timeline node */}
+                      <div className="flex flex-col items-center mt-1">
+                        <NodeDot color={accentColor} />
                       </div>
 
-                      <ul className="space-y-2">
-                        {edu.achievements?.map((item, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-dark-600 dark:text-dark-400">
-                            <span className="text-purple-500 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-current" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </Card>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
+                      {/* Card */}
+                      <div className="flex-1 bg-white dark:bg-dark-900 rounded-2xl border border-dark-200 dark:border-dark-800 p-5 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-250 group">
+                        {/* Type badge + date */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                          <span className={`text-[8px] font-mono font-bold px-2 py-0.5 rounded-full border ${labelColor} ${isWork ? 'bg-primary-50 dark:bg-primary-950/20 border-primary-200 dark:border-primary-800/40' : 'bg-purple-50 dark:bg-purple-950/20 border-purple-200 dark:border-purple-800/40'}`}>
+                            {trackLabel}
+                          </span>
+                          <div className="flex items-center gap-1 text-[9px] font-mono text-dark-400">
+                            <Calendar className="w-3 h-3" />
+                            <span>{item.period}</span>
+                          </div>
+                        </div>
 
+                        {/* Title */}
+                        <h4 className="text-sm font-bold text-dark-900 dark:text-white mb-0.5">
+                          {isWork ? item.title : item.degree}
+                        </h4>
+
+                        {/* Company/institution */}
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className={`text-xs font-semibold ${labelColor}`}>
+                            {isWork ? item.company : item.institution}
+                          </span>
+                          {(item.location) && (
+                            <>
+                              <span className="text-dark-300 dark:text-dark-700">·</span>
+                              <span className="flex items-center gap-0.5 text-[9px] font-mono text-dark-400">
+                                <MapPin className="w-2.5 h-2.5" />
+                                {item.location}
+                              </span>
+                            </>
+                          )}
+                          {item.grade && (
+                            <>
+                              <span className="text-dark-300 dark:text-dark-700">·</span>
+                              <span className="text-[9px] font-mono font-bold text-amber-500">{item.grade}</span>
+                            </>
+                          )}
+                        </div>
+
+                        {/* Achievements */}
+                        {item.achievements && (
+                          <ul className="space-y-1.5">
+                            {item.achievements.map((a, i) => (
+                              <li key={i} className="flex items-start gap-2 text-xs text-dark-500 dark:text-dark-400">
+                                <ChevronRight className={`w-3 h-3 mt-0.5 flex-shrink-0 ${labelColor} opacity-60`} />
+                                <span>{a}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {/* Tech chips */}
+                        {item.technologies && item.technologies.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-dark-100 dark:border-dark-800">
+                            {item.technologies.map(t => (
+                              <span key={t} className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-50 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-dark-400">
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: System Benchmarks (Certifications + Hackathons) */}
-          <div className="lg:col-span-4 space-y-12">
-            
-            {/* Certifications Block */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-green-500">
-                  <Award className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold font-mono tracking-widest text-dark-900 dark:text-white uppercase">
-                  [BENCHMARKS]
-                </h3>
-              </div>
+          {/* ── Right: Certifications + Hackathons ── */}
+          <div className="lg:col-span-4 space-y-10">
 
-              <div className="space-y-4">
+            {/* Certifications */}
+            <div>
+              <div className="text-[9px] font-mono text-dark-400 tracking-widest uppercase mb-4 flex items-center gap-2">
+                <Award className="w-3.5 h-3.5 text-green-500" />
+                BENCHMARKS / CERTIFICATIONS
+              </div>
+              <div className="space-y-3">
                 {certifications.map((cert) => (
-                  <Card key={cert.id} className="p-4 border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 flex items-start gap-3.5 transition-all hover:border-green-500/40">
-                    <div className="p-2 rounded bg-green-50 dark:bg-green-950/20 text-green-500 mt-0.5 border border-green-200/50 dark:border-green-800/50">
-                      <Award className="w-4 h-4" />
+                  <motion.div
+                    key={cert.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 hover:border-green-400/40 transition-all"
+                  >
+                    <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200/50 dark:border-green-800/50 flex-shrink-0">
+                      <Award className="w-3.5 h-3.5 text-green-500" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">
-                        {cert.name}
-                      </h4>
-                      <p className="text-[10px] text-dark-500 dark:text-dark-400 mt-1 font-mono uppercase">
-                        {cert.issuer} / {cert.date}
+                      <h5 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">{cert.name}</h5>
+                      <p className="text-[9px] font-mono text-dark-400 mt-0.5 uppercase tracking-wider">
+                        {cert.issuer} · {cert.date}
                       </p>
                     </div>
-                  </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            {/* Hackathons Block */}
+            {/* Hackathons */}
             <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-500">
-                  <Terminal className="w-4 h-4" />
-                </div>
-                <h3 className="text-lg font-bold font-mono tracking-widest text-dark-900 dark:text-white uppercase">
-                  [HACKATHONS]
-                </h3>
+              <div className="text-[9px] font-mono text-dark-400 tracking-widest uppercase mb-4 flex items-center gap-2">
+                <Terminal className="w-3.5 h-3.5 text-amber-500" />
+                HACKATHONS
               </div>
-
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {hackathons.map((hack) => (
-                  <Card key={hack.id} className="p-4 border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 flex items-start gap-3.5 transition-all hover:border-amber-500/40">
-                    <div className="p-2 rounded bg-amber-50 dark:bg-amber-950/20 text-amber-500 mt-0.5 border border-amber-200/50 dark:border-amber-800/50">
-                      <Terminal className="w-4 h-4" />
+                  <motion.div
+                    key={hack.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3 p-4 rounded-xl border border-dark-200 dark:border-dark-800 bg-white dark:bg-dark-900 hover:border-amber-400/40 transition-all"
+                  >
+                    <div className="p-2 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/50 flex-shrink-0">
+                      <Terminal className="w-3.5 h-3.5 text-amber-500" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">
-                        {hack.name}
-                      </h4>
-                      <p className="text-[10px] text-dark-500 dark:text-dark-400 mt-1 font-mono uppercase">
-                        {hack.position} / {hack.date}
+                      <h5 className="text-xs font-bold text-dark-900 dark:text-white leading-tight">{hack.name}</h5>
+                      <p className="text-[9px] font-mono text-amber-500 mt-0.5 uppercase tracking-wider font-bold">
+                        {hack.position}
                       </p>
+                      <p className="text-[9px] font-mono text-dark-400 mt-0.5">{hack.date}</p>
                     </div>
-                  </Card>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
           </div>
-
         </div>
       </div>
     </section>
