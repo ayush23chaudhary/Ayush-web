@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Braces, Sparkles, Folder, Heart } from 'lucide-react';
+import { Terminal, Braces, Sparkles, Folder, Heart, Play, Pause, RefreshCw } from 'lucide-react';
 
 const SystemGraph = () => {
   const [activeNode, setActiveNode] = useState(null);
+  const [isAutoCycle, setIsAutoCycle] = useState(true);
+  const [cycleIndex, setCycleIndex] = useState(0);
+  const autoCycleTimer = useRef(null);
 
   // Nodes position inside a 500x500 box (scaled dynamically)
   const nodes = [
@@ -109,8 +112,42 @@ const SystemGraph = () => {
     { source: 'fullstack', target: 'diagramnote' }
   ];
 
+  // Auto cycling logic
+  useEffect(() => {
+    if (isAutoCycle) {
+      autoCycleTimer.current = setInterval(() => {
+        setCycleIndex((prevIndex) => {
+          const nextIndex = (prevIndex + 1) % nodes.length;
+          setActiveNode(nodes[nextIndex]);
+          return nextIndex;
+        });
+      }, 4000); // Shift every 4 seconds
+    } else {
+      clearInterval(autoCycleTimer.current);
+    }
+
+    return () => clearInterval(autoCycleTimer.current);
+  }, [isAutoCycle]);
+
+  // Set initial active node on mount
+  useEffect(() => {
+    setActiveNode(nodes[0]);
+  }, []);
+
+  const handleNodeHover = (node) => {
+    setIsAutoCycle(false); // Pause auto cycling when user hovers manually
+    setActiveNode(node);
+  };
+
+  const handleMouseLeave = () => {
+    // Optional: Resume auto-cycle after mouse leaves, or let the user toggle it back.
+    // Let's resume it automatically after a short delay for continuous liveliness.
+    setIsAutoCycle(true);
+  };
+
   return (
     <div className="relative w-full aspect-square max-w-[500px] mx-auto bg-dark-50/20 dark:bg-dark-900/10 rounded-3xl border border-dark-200/50 dark:border-dark-800/50 p-4 overflow-hidden bg-grid-blueprint">
+      
       {/* SVG connections layer */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 500 500">
         {links.map((link, idx) => {
@@ -123,7 +160,7 @@ const SystemGraph = () => {
           return (
             <g key={idx}>
               {/* Glow line */}
-              <motion.line
+              <line
                 x1={fromNode.x}
                 y1={fromNode.y}
                 x2={toNode.x}
@@ -153,7 +190,7 @@ const SystemGraph = () => {
       {/* Nodes layer */}
       {nodes.map((node) => {
         const Icon = node.icon;
-        const isHovered = activeNode && activeNode.id === node.id;
+        const isActive = activeNode && activeNode.id === node.id;
         
         return (
           <motion.div
@@ -164,18 +201,26 @@ const SystemGraph = () => {
               top: node.y,
               transform: 'translate(-50%, -50%)',
             }}
-            whileHover={{ scale: 1.12 }}
-            onMouseEnter={() => setActiveNode(node)}
-            onMouseLeave={() => setActiveNode(null)}
+            animate={{
+              scale: isActive ? 1.15 : 1,
+            }}
+            onMouseEnter={() => handleNodeHover(node)}
+            onMouseLeave={handleMouseLeave}
             className="cursor-pointer z-10 select-none group"
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 shadow-sm ${node.fill} transition-all duration-300 group-hover:shadow-primary-500/20`}>
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center border-2 shadow-sm transition-all duration-300 ${
+              isActive 
+                ? 'bg-primary-500/20 border-primary-500 shadow-primary-500/30 scale-110' 
+                : `${node.fill} group-hover:shadow-primary-500/20`
+            }`}>
               <Icon className={`w-5 h-5 ${node.color}`} />
             </div>
 
             {/* Micro-label */}
             <div className="absolute top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
-              <div className="text-[10px] font-bold text-dark-900 dark:text-white uppercase font-mono tracking-wider">
+              <div className={`text-[10px] font-bold uppercase font-mono tracking-wider transition-colors duration-300 ${
+                isActive ? 'text-primary-500 dark:text-primary-400' : 'text-dark-900 dark:text-white'
+              }`}>
                 {node.label}
               </div>
               <div className="text-[7px] text-dark-400 dark:text-dark-500 font-mono tracking-widest mt-0.5">
@@ -186,35 +231,51 @@ const SystemGraph = () => {
         );
       })}
 
-      {/* Blueprint Annotations */}
-      <div className="absolute top-3 left-3 text-[8px] font-mono text-dark-400 tracking-widest uppercase">
-        SYS.NODE_MAP / ACT_01
+      {/* Blueprint Annotations & Manual Controls */}
+      <div className="absolute top-3 left-3 flex items-center gap-3">
+        <span className="text-[8px] font-mono text-dark-400 tracking-widest uppercase">
+          SYS.NODE_MAP / ACT_01
+        </span>
+        <button
+          onClick={() => setIsAutoCycle(!isAutoCycle)}
+          className="p-1 rounded bg-dark-100 dark:bg-dark-800 border border-dark-200 dark:border-dark-700 text-dark-500 hover:text-primary-500 dark:hover:text-primary-400 transition-colors flex items-center gap-1 text-[8px] font-mono"
+          title={isAutoCycle ? "Pause Auto Scan" : "Resume Auto Scan"}
+        >
+          {isAutoCycle ? <Pause className="w-2 h-2" /> : <Play className="w-2 h-2" />}
+          <span>{isAutoCycle ? "AUTO_SCAN" : "MANUAL"}</span>
+        </button>
       </div>
-      <div className="absolute bottom-3 right-3 text-[8px] font-mono text-dark-400 tracking-widest">
-        COORD: [250.250.50]
+
+      <div className="absolute bottom-3 right-3 text-[8px] font-mono text-dark-400 tracking-widest flex items-center gap-2">
+        <RefreshCw className={`w-2.5 h-2.5 ${isAutoCycle ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }} />
+        <span>COORD: [250.250.50]</span>
       </div>
 
       {/* Detail overlay */}
-      <AnimatePresence>
-        {activeNode && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-dark-900/90 backdrop-blur-md p-4 rounded-xl border border-dark-200 dark:border-dark-800 shadow-xl"
-          >
-            <div className="flex items-center gap-2 mb-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-              <h4 className="text-xs font-bold font-mono tracking-wider text-primary-500 dark:text-primary-400 uppercase">
-                {activeNode.label} / {activeNode.sublabel}
-              </h4>
-            </div>
-            <p className="text-xs text-dark-600 dark:text-dark-300 font-sans leading-relaxed">
-              {activeNode.description}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="absolute bottom-12 left-4 right-4 h-24 pointer-events-none">
+        <AnimatePresence mode="wait">
+          {activeNode && (
+            <motion.div
+              key={activeNode.id}
+              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ duration: 0.25 }}
+              className="bg-white/90 dark:bg-dark-900/90 backdrop-blur-md p-4 rounded-xl border border-dark-200 dark:border-dark-800 shadow-xl pointer-events-auto"
+            >
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+                <h4 className="text-xs font-bold font-mono tracking-wider text-primary-500 dark:text-primary-400 uppercase">
+                  {activeNode.label} / {activeNode.sublabel}
+                </h4>
+              </div>
+              <p className="text-xs text-dark-600 dark:text-dark-300 font-sans leading-relaxed">
+                {activeNode.description}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
