@@ -79,24 +79,24 @@ const RadarChart = ({ categories, activeIdx }) => {
         />
       ))}
 
-      {/* Filled polygon */}
-      <motion.path
+      {/* Filled polygon — CSS transition on d for smooth morphing */}
+      <path
         d={toPath(highlightPoints)}
         fill="rgba(59,130,246,0.12)"
         stroke="rgba(59,130,246,0.5)"
         strokeWidth="1.5"
-        animate={{ d: toPath(highlightPoints) }}
-        transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+        style={{ transition: 'all 0.4s ease' }}
       />
 
-      {/* Vertex dots */}
+      {/* Vertex dots — CSS transition avoids Framer Motion SVG attr undefined issue */}
       {highlightPoints.map((pt, i) => (
-        <motion.circle
+        <circle
           key={i}
-          animate={{ cx: pt.x, cy: pt.y }}
-          transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+          cx={pt.x}
+          cy={pt.y}
           r={i === activeIdx ? 4 : 2.5}
           fill={i === activeIdx ? '#3b82f6' : 'rgba(59,130,246,0.5)'}
+          style={{ transition: 'r 0.3s ease, fill 0.3s ease' }}
         />
       ))}
 

@@ -66,20 +66,32 @@ const TypewriterRole = () => {
    Boot-up name: each character staggered in from below
 ------------------------------------------------------------------ */
 const BootName = ({ name }) => {
-  const chars = name.split('');
+  const words = name.split(' ');
+  let globalIdx = 0;
+
   return (
-    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-dark-900 dark:text-white uppercase font-display leading-none flex flex-wrap gap-x-[2px]">
-      {chars.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 28, filter: 'blur(4px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.4, delay: 0.3 + i * 0.04, ease: 'easeOut' }}
-          className={char === ' ' ? 'w-3' : undefined}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
+    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-dark-900 dark:text-white uppercase font-display leading-none flex flex-wrap gap-x-3 sm:gap-x-4">
+      {words.map((word, wIdx) => {
+        const wordEl = (
+          <span key={wIdx} className="inline-flex whitespace-nowrap">
+            {word.split('').map((char, cIdx) => {
+              const delay = 0.3 + globalIdx * 0.04;
+              globalIdx++;
+              return (
+                <motion.span
+                  key={cIdx}
+                  initial={{ opacity: 0, y: 28, filter: 'blur(4px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.4, delay, ease: 'easeOut' }}
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
+        );
+        return wordEl;
+      })}
     </h1>
   );
 };
