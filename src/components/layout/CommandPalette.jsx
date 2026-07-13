@@ -10,23 +10,6 @@ const CommandPalette = ({ isOpen, onClose }) => {
   const inputRef = useRef(null);
   const listRef = useRef(null);
 
-  // Always read dark state from the DOM so we stay in sync with Navbar toggle
-  const isDarkMode = document.documentElement.classList.contains('dark');
-
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    if (isDarkMode) {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-    // Dispatch storage event so Navbar's useEffect can stay aware (same-tab)
-    window.dispatchEvent(new CustomEvent('themeChange', { detail: { dark: !isDarkMode } }));
-    onClose();
-  };
-
   const actions = [
     {
       id: 'projects',

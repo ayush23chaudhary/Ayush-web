@@ -3,12 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, Moon, Sun } from 'lucide-react';
 import CommandPalette from './CommandPalette';
 
-// Initialize dark mode from localStorage or system preference
+// Initialize to light mode by default
 const getInitialDark = () => {
-  if (typeof window === 'undefined') return false;
-  const stored = localStorage.getItem('theme');
-  if (stored) return stored === 'dark';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return false;
 };
 
 const navLinks = [
@@ -25,19 +22,14 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [isDark, setIsDark] = useState(getInitialDark);
+  const [isDark, setIsDark] = useState(false);
 
-  // Sync dark class on html element
+  // Enforce light theme state on mount
   useEffect(() => {
     const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
+    root.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,18 +43,11 @@ const Navbar = () => {
       }
     };
 
-    // Keep isDark state in sync if CommandPalette or external code mutates the DOM class
-    const handleThemeChange = (e) => {
-      setIsDark(e.detail.dark);
-    };
-
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('themeChange', handleThemeChange);
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('themeChange', handleThemeChange);
     };
   }, []);
 
