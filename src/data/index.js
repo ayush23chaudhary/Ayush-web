@@ -9,3 +9,4 @@ export {
   certifications, 
   getTimelineItems 
 } from './experience.js';
+export { openSourceContributions } from './opensource.js';

@@ -4,6 +4,7 @@ import {
   About, 
   Skills, 
   Projects, 
+  OpenSource,
   Experience, 
   Resume, 
   Contact 
@@ -36,6 +37,9 @@ function App() {
         
         {/* Projects Section */}
         <Projects />
+        
+        {/* Open Source Contributions Section */}
+        <OpenSource />
         
         {/* Experience & Education Section */}
         <Experience />

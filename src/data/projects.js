@@ -56,6 +56,52 @@ export const projects = [
     category: "Full-Stack"
   },
   {
+    id: 1.7,
+    title: "DiagramNote – Premium Note Maker & Mermaid Editor",
+    slug: "diagramnote",
+    featured: true,
+    problem: "Developers and writers lack a streamlined, high-performance editor to draft Markdown notes alongside synchronized, theme-aware live-rendered Mermaid diagrams.",
+    description: "A premium, high-performance, single-page Markdown and Mermaid.js v11 diagramming editor that auto-saves drafts locally and provides a live preview as you type.",
+    features: [
+      "Mermaid.js v11 support with live dynamic updates",
+      "Theme-aware rendering synchronizing with dark and light modes",
+      "Debounced live preview (300ms) for typing responsiveness",
+      "GitHub-style callouts/alerts support with inline SVGs",
+      "Local persistence via localStorage draft cycling",
+      "Flexible export to Markdown (.md), standalone HTML, or PDF"
+    ],
+    impact: "Enables fast, responsive documentation and design drawing from a single sleek glassmorphic workspace.",
+    technologies: ["HTML", "CSS", "JavaScript", "Mermaid.js", "Vite"],
+    liveUrl: "https://diagram-note-three.vercel.app",
+    githubUrl: "https://github.com/ayush23chaudhary/DiagramNote",
+    image: null,
+    images: [],
+    category: "Front-End"
+  },
+  {
+    id: 1.8,
+    title: "TransitOps – Smart Transport Operations Platform",
+    slug: "transitops",
+    featured: true,
+    problem: "Transport operations are often fragmented, leading to conflicting assignments, expired compliance issues, and disconnected tracking of fleet resources.",
+    description: "An intelligent end-to-end transport operations platform designed to unify fleet management, smart dispatch, driver compliance, maintenance, expense tracking, and operational analytics.",
+    features: [
+      "State-enforced Trip Dispatcher preventing conflicting assignments",
+      "Vehicle registry with automated state tracking (Available, On Trip, In Shop)",
+      "Driver & safety registry with license compliance tracking",
+      "Maintenance lifecycle management connected to vehicle availability",
+      "Fuel and expense tracking with vehicle-level cost analysis",
+      "Unified operations dashboard with fleet utilization analytics"
+    ],
+    impact: "Brings fleet management under one operational truth by coordinating real-time status transitions.",
+    technologies: ["React", "Node.js", "Express", "Prisma", "PostgreSQL", "Tailwind CSS"],
+    liveUrl: "https://transitops-smart-transport-platform.vercel.app/",
+    githubUrl: "https://github.com/ayush23chaudhary/Transitops-smart-transport-platform",
+    image: null,
+    images: [],
+    category: "Full-Stack"
+  },
+  {
     id: 2,
     title: "BrajPath – Mathura Heritage & Tourism Platform",
     slug: "brajpath",
