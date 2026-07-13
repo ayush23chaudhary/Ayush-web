@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Braces, Sparkles, Folder, Heart } from 'lucide-react';
 
 const SystemGraph = () => {
