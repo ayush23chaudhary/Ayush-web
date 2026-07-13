@@ -121,9 +121,9 @@ const OpenSource = () => {
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 className={`
                   group relative rounded-xl overflow-hidden
-                  bg-dark-900 border border-dark-800
+                  bg-[#111622] border border-slate-800
                   border-l-4 ${cfg.border}
-                  hover:border-dark-700 hover:shadow-2xl hover:shadow-black/40
+                  hover:border-slate-700 hover:shadow-2xl hover:shadow-black/60
                   transition-all duration-300
                 `}
               >
@@ -132,8 +132,8 @@ const OpenSource = () => {
                   {/* Top row: repo + status badge */}
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <Github className="w-3.5 h-3.5 text-dark-400" />
-                      <span className="text-xs font-mono font-semibold text-dark-300 group-hover:text-white transition-colors">
+                      <Github className="w-3.5 h-3.5 text-slate-400" />
+                      <span className="text-xs font-mono font-semibold text-slate-300 group-hover:text-white transition-colors">
                         {pr.repo}
                       </span>
                     </div>
@@ -145,23 +145,23 @@ const OpenSource = () => {
                   </div>
 
                   {/* PR title (used as bold heading) */}
-                  <h3 className="text-sm font-bold text-dark-100 group-hover:text-white transition-colors mb-2 leading-snug">
+                  <h3 className="text-sm font-bold text-slate-100 group-hover:text-white transition-colors mb-2 leading-snug">
                     {pr.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-xs text-dark-400 leading-relaxed mb-4 font-sans">
+                  <p className="text-xs text-slate-400 leading-relaxed mb-4 font-sans">
                     {pr.description}
                   </p>
 
                   {/* Footer: tech chips + impact + link */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-dark-800">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-800">
                     {/* Tech chips */}
                     <div className="flex flex-wrap gap-1.5">
                       {pr.technologies?.map((tech) => (
                         <span
                           key={tech}
-                          className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-dark-800 text-dark-400 border border-dark-700"
+                          className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-slate-900 text-slate-400 border border-slate-800"
                         >
                           {tech}
                         </span>
